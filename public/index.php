@@ -44,6 +44,11 @@ spl_autoload_register(function ($class) {
     return false;
 });
 
+// Charger les helpers globaux (fonctions utilitaires)
+if (file_exists(APP_PATH . '/Core/Helper.php')) {
+    require_once APP_PATH . '/Core/Helper.php';
+}
+
 // Charger la configuration (fichiers dans app/Config)
 if (file_exists(APP_PATH . '/Config/app.php')) {
     require_once APP_PATH . '/Config/app.php';
