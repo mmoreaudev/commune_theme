@@ -151,14 +151,15 @@ add_action('widgets_init', 'mairie_widgets_init');
  * Chargement des styles et scripts
  */
 function mairie_enqueue_scripts() {
-    // Tailwind CSS via CDN
-    wp_enqueue_style('tailwind-cdn', 'https://cdn.tailwindcss.com', array(), '3.4.1');
+    // Tailwind CSS via CDN jsDelivr (fichier CSS compilé complet)
+    wp_enqueue_style('tailwind-cdn', 'https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css', array(), '3.4.1');
     
     // Font Awesome pour les icônes
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1');
     
     // Style personnalisé minimal (pour RGAA et surcharges spécifiques)
-    wp_enqueue_style('mairie-custom', MAIRIE_THEME_URI . '/assets/css/custom.css', array('tailwind-cdn'), MAIRIE_THEME_VERSION);
+    // IMPORTANT : Doit être chargé APRÈS Tailwind pour pouvoir surcharger les styles
+    wp_enqueue_style('mairie-custom', MAIRIE_THEME_URI . '/assets/css/custom.css', array('tailwind-cdn', 'font-awesome'), MAIRIE_THEME_VERSION);
     
     // Scripts
     wp_enqueue_script('mairie-navigation', MAIRIE_THEME_URI . '/assets/js/navigation.js', array('jquery'), MAIRIE_THEME_VERSION, true);
