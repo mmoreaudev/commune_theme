@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Functions pour le thème Commune CDN.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function commune_theme_cdn_preprocess_page(&$variables) {
+  $variables['site_logo'] = theme_get_setting('logo.url');
+  $variables['site_name'] = \Drupal::config('system.site')->get('name');
+  $variables['hide_site_name'] = theme_get_setting('features.name') ? FALSE : TRUE;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ */
+function commune_theme_cdn_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $variables['date'] = \Drupal::service('date.formatter')->format($node->getCreatedTime(), 'custom', 'd/m/Y');
+  $variables['author_name'] = $node->getOwner()->getDisplayName();
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function commune_theme_cdn_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Ajouter des classes CSS aux formulaires
+  if (isset($form['#attributes']['class'])) {
+    $form['#attributes']['class'][] = 'space-y-4';
+  } else {
+    $form['#attributes']['class'] = ['space-y-4'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for form element templates.
+ */
+function commune_theme_cdn_preprocess_form_element(&$variables) {
+  $element = &$variables['element'];
+  
+  // Ajouter des classes CSS aux éléments de formulaire
+  if (isset($element['#type'])) {
+    switch ($element['#type']) {
+      case 'textfield':
+      case 'email':
+      case 'password':
+      case 'tel':
+      case 'url':
+        $variables['attributes']['class'][] = 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-commune-500 focus:border-commune-500';
+        break;
+      
+      case 'textarea':
+        $variables['attributes']['class'][] = 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-commune-500 focus:border-commune-500 resize-vertical';
+        break;
+      
+      case 'select':
+        $variables['attributes']['class'][] = 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-commune-500 focus:border-commune-500';
+        break;
+      
+      case 'submit':
+        $variables['attributes']['class'][] = 'btn btn-primary';
+        break;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for breadcrumb templates.
+ */
+function commune_theme_cdn_preprocess_breadcrumb(&$variables) {
+  if (($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']) {
+    $variables['breadcrumb'][] = [
+      'text' => $node->getTitle(),
+    ];
+  }
+}

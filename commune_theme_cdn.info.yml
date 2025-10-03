@@ -1,0 +1,30 @@
+name: 'Commune Theme CDN'
+type: theme
+description: 'Thème moderne pour communes avec Tailwind CSS et Alpine.js via CDN'
+package: 'Commune'
+version: '1.0.0'
+core_version_requirement: ^11
+base theme: false
+
+# Régions du thème
+regions:
+  header: 'En-tête'
+  primary_menu: 'Menu principal'
+  hero: 'Zone héro'
+  highlighted: 'Contenu mis en avant'
+  content: 'Contenu principal'
+  sidebar_first: 'Barre latérale'
+  footer: 'Pied de page'
+  page_top: 'Haut de page'
+  page_bottom: 'Bas de page'
+
+# Librairies CDN
+libraries:
+  - commune_theme/base
+
+# Configuration
+features:
+  - favicon
+  - logo
+  - name
+  - slogan

@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Template pour les blocs
+ */
+#}
+<div{{ attributes.addClass('block mb-6') }}>
+  {{ title_prefix }}
+  {% if label %}
+    <h2{{ title_attributes.addClass('text-xl font-bold text-gray-900 mb-4') }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+</div>

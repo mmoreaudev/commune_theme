@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Template pour les articles/actualités
+ */
+#}
+<article{{ attributes.addClass('bg-white rounded-lg shadow-md overflow-hidden mb-6') }}>
+  {% if content.field_image %}
+    <div class="aspect-w-16 aspect-h-9">
+      {{ content.field_image }}
+    </div>
+  {% endif %}
+  
+  <div class="p-6">
+    <div class="flex items-center mb-4">
+      <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+        {{ 'Actualité'|t }}
+      </span>
+      {% if node.createdtime %}
+        <time class="text-gray-500 text-sm ml-4">
+          {{ node.createdtime|format_date('custom', 'd/m/Y') }}
+        </time>
+      {% endif %}
+    </div>
+    
+    {{ title_prefix }}
+    {% if label and not page %}
+      <h2{{ title_attributes.addClass('text-2xl font-bold text-gray-900 mb-4 hover:text-blue-600 transition-colors') }}>
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+    {% endif %}
+    {{ title_suffix }}
+    
+    <div{{ content_attributes.addClass('prose max-w-none') }}>
+      {{ content|without('field_image', 'links') }}
+    </div>
+    
+    {% if not page %}
+      <div class="mt-6">
+        <a href="{{ url }}" class="btn btn-primary">
+          {{ 'Lire la suite'|t }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,11 @@
+{#
+/**
+ * @file
+ * Template pour les régions (blocs)
+ */
+#}
+{% if content %}
+  <section{{ attributes.addClass('region mb-8') }}>
+    {{ content }}
+  </section>
+{% endif %}

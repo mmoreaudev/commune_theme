@@ -1,0 +1,11 @@
+# Librairie de base (CDN chargés via template)
+base:
+  version: 1.0
+  css:
+    theme:
+      assets/css/custom.css: { weight: 10 }
+  js:
+    assets/js/custom.js: { weight: 10 }
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
