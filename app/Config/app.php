@@ -8,7 +8,7 @@ return [
         'name' => 'CMS Mairie',
         'version' => '1.0.0',
         'debug' => $_ENV['APP_DEBUG'] ?? false,
-        'url' => $_ENV['APP_URL'] ?? 'http://localhost:8024',
+        'url' => $_ENV['APP_URL'] ?? 'http://vpn.mateomoreau.com:8024',
         'timezone' => 'Europe/Paris'
     ],
     

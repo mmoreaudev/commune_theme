@@ -188,7 +188,7 @@ class Router
      */
     public static function url($path = '')
     {
-        $baseUrl = $_ENV['APP_URL'] ?? 'http://localhost:8024';
+        $baseUrl = $_ENV['APP_URL'] ?? 'http://vpn.mateomoreau.com:8024';
         return rtrim($baseUrl, '/') . '/' . ltrim($path, '/');
     }
     

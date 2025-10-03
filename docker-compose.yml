@@ -37,7 +37,7 @@ services:
       - DB_PATH=/var/www/html/database/mairie.db
       - APP_ENV=development
       - APP_DEBUG=true
-      - APP_URL=http://localhost:8024
+      - APP_URL=http://vpn.mateomoreau.com:8024
       - UPLOAD_MAX_SIZE=50M
       # Forcer HTTP
       - HTTPS=off
