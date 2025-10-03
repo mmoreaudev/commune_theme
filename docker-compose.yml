@@ -16,6 +16,9 @@ services:
       - php
     networks:
       - mairie_network
+    environment:
+      # Éviter les redirections HTTPS automatiques
+      - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx/conf.d
 
   php:
     build:
@@ -32,10 +35,13 @@ services:
       - db_data:/var/www/html/database
     environment:
       - DB_PATH=/var/www/html/database/mairie.db
-      - APP_ENV=production
-      - APP_DEBUG=false
+      - APP_ENV=development
+      - APP_DEBUG=true
       - APP_URL=http://localhost:8024
       - UPLOAD_MAX_SIZE=50M
+      # Forcer HTTP
+      - HTTPS=off
+      - REQUEST_SCHEME=http
     networks:
       - mairie_network
 

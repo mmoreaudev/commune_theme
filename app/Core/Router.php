@@ -124,14 +124,37 @@ class Router
         
         // Exécuter le contrôleur
         $controller = $this->currentRoute['controller'];
-        
+
         if (is_string($controller)) {
             // Format "Controller@method"
             if (strpos($controller, '@') !== false) {
                 list($class, $method) = explode('@', $controller);
-                
-                if (class_exists($class)) {
-                    $instance = new $class();
+
+                // Essayer d'utiliser directement le nom de classe tel quel
+                $classCandidate = $class;
+
+                // Si la classe n'existe pas, essayer de normaliser (supporter Admin\AuthController ou Admin/AuthController)
+                if (!class_exists($classCandidate)) {
+                    $parts = preg_split('/[\\\\\/]/', $class);
+                    $shortClass = end($parts);
+
+                    // Si la classe courte existe (sans namespace), utilisez-la
+                    if (class_exists($shortClass)) {
+                        $classCandidate = $shortClass;
+                    } else {
+                        // Tenter de charger manuellement le fichier à partir de app/Controllers
+                        $controllerPath = __DIR__ . '/../Controllers/' . implode('/', $parts) . '.php';
+                        if (file_exists($controllerPath)) {
+                            require_once $controllerPath;
+                            if (class_exists($shortClass)) {
+                                $classCandidate = $shortClass;
+                            }
+                        }
+                    }
+                }
+
+                if (class_exists($classCandidate)) {
+                    $instance = new $classCandidate();
                     if (method_exists($instance, $method)) {
                         return $instance->$method();
                     }
@@ -141,7 +164,7 @@ class Router
             // Fonction anonyme
             return $controller();
         }
-        
+
         throw new Exception("Contrôleur non trouvé : " . $controller);
     }
     
