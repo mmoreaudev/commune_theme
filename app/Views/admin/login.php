@@ -9,7 +9,7 @@
     <title><?= htmlspecialchars($title ?? 'Login') ?></title>
 </head>
 <body>
-    <h1>Connexion admin (placeholder)</h1>
+    <h1>Connexion admin (placeholder - will be moved)</h1>
     <form method="post" action="/admin/login">
         <label>Email: <input type="email" name="email"></label><br>
         <label>Mot de passe: <input type="password" name="password"></label><br>

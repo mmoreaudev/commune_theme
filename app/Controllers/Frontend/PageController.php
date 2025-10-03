@@ -41,4 +41,45 @@ class PageController extends Controller
             'numbers' => $numbers
         ]);
     }
+    
+    public function demarches()
+    {
+        $demarches = Demarche::getAllGrouped();
+        return $this->view('frontend.pages.demarches', [
+            'title' => 'Démarches administratives - ' . setting('city_name'),
+            'demarches' => $demarches
+        ]);
+    }
+    
+    public function infos()
+    {
+        return $this->view('frontend.pages.infos-pratiques', [
+            'title' => 'Infos pratiques - ' . setting('city_name')
+        ]);
+    }
+    
+    public function schedules()
+    {
+        $schedules = Schedule::all();
+        return $this->view('frontend.pages.schedules', [
+            'title' => 'Horaires - ' . setting('city_name'),
+            'schedules' => $schedules
+        ]);
+    }
+    
+    public function faq()
+    {
+        $faqs = Faq::getAllGrouped();
+        return $this->view('frontend.pages.faq', [
+            'title' => 'FAQ - ' . setting('city_name'),
+            'faqs' => $faqs
+        ]);
+    }
+    
+    public function localLife()
+    {
+        return $this->view('frontend.pages.local-life', [
+            'title' => 'Vie locale - ' . setting('city_name')
+        ]);
+    }
 }

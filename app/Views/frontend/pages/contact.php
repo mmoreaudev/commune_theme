@@ -1,4 +1,6 @@
-<?php $this->layout('frontend/layouts/main', ['title' => 'Contact']); ?>
+<?php 
+$content = ob_start(); 
+?>
 
 <div class="bg-white">
     <!-- Hero Section -->
@@ -412,3 +414,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<?php 
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/main.php'; 
+?>
