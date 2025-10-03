@@ -24,7 +24,7 @@ $content = ob_start();
                 📅 Événements locaux  
             </h2>
             <p class="text-gray-700 mb-4">Les événements organisés par les associations et la commune.</p>
-            <a href="/vie-locale/evenements" class="inline-block bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="/evenements" class="inline-block bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
                 Voir les événements
             </a>
         </div>
