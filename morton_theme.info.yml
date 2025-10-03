@@ -3,7 +3,7 @@ type: theme
 description: 'Thème élégant, minimaliste et accessible pour la commune de Morton (86). Utilise TailwindCSS, Flowbite et Font Awesome via CDN. Conçu pour Drupal 11.'
 package: Custom
 core_version_requirement: ^11
-#base theme: classy
+base theme: classy
 libraries:
   - morton_theme/global
 
