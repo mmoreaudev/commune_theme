@@ -167,21 +167,44 @@ class Post extends Model
     
     /**
      * Rechercher des articles
+     * Signature compatible avec Model::search($query, $columns = [])
      */
-    public static function search($query)
+    public static function search($query, $columns = [])
     {
         $db = Database::getInstance();
-        
+
+        // Colonnes par défaut à rechercher
+        if (empty($columns)) {
+            $columns = ['title', 'content', 'excerpt'];
+        }
+
+        // Construire la clause WHERE en fonction des colonnes demandées
+        $whereParts = [];
+        $params = [];
+
+        foreach ($columns as $col) {
+            // Supporter quelques alias pratiques
+            if ($col === 'category' || $col === 'category_name') {
+                $whereParts[] = "c.name LIKE ?";
+            } elseif ($col === 'author' || $col === 'author_name') {
+                $whereParts[] = "u.full_name LIKE ?";
+            } else {
+                // Préfixer par p. pour les colonnes du post
+                $whereParts[] = "p.{$col} LIKE ?";
+            }
+            $params[] = "%{$query}%";
+        }
+
+        $whereClause = '(' . implode(' OR ', $whereParts) . ')';
+
         $sql = "SELECT p.*, c.name as category_name, u.full_name as author_name 
                 FROM posts p 
                 LEFT JOIN categories c ON p.category_id = c.id
                 LEFT JOIN users u ON p.author_id = u.id
-                WHERE (p.title LIKE ? OR p.content LIKE ? OR p.excerpt LIKE ?) 
-                AND p.status = 'published'
+                WHERE {$whereClause} AND p.status = 'published'
                 ORDER BY p.published_at DESC";
-        
-        $searchTerm = "%{$query}%";
-        $stmt = $db->query($sql, [$searchTerm, $searchTerm, $searchTerm]);
+
+        $stmt = $db->query($sql, $params);
         return $stmt->fetchAll();
     }
     
