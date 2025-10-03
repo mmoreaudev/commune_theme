@@ -1,0 +1,23 @@
+<article class="card fade-in" itemscope itemtype="https://schema.org/Event">
+  <div class="card-content">
+    <h1 class="card-title" itemprop="name">{{ node.title.value }}</h1>
+    <div class="flex items-center mb-4">
+      <i class="fas fa-calendar-alt text-blue-600 mr-2"></i>
+      <p class="card-meta" itemprop="startDate" content="{{ node.field_date.value|date('c') }}">
+        {{ node.field_date.value|date('l j F Y à H:i') }}
+      </p>
+    </div>
+    <div class="flex items-center mb-4">
+      <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+      <p class="card-text" itemprop="location" itemscope itemtype="https://schema.org/Place">
+        <span itemprop="address">{{ node.field_lieu.value }}</span>
+      </p>
+    </div>
+    <div class="card-text" itemprop="description">
+      {{ node.body.value|raw }}
+    </div>
+    <a href="{{ url }}" class="btn-primary inline-block mt-4" aria-label="Voir les détails de l'événement {{ node.title.value }}">
+      <i class="fas fa-info-circle mr-2"></i>Voir les détails
+    </a>
+  </div>
+</article>

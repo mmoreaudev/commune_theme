@@ -1,0 +1,18 @@
+<article class="card fade-in" itemscope itemtype="https://schema.org/CreativeWork">
+  <div class="card-content">
+    <h1 class="card-title" itemprop="name">{{ node.title.value }}</h1>
+    <p class="card-meta" itemprop="datePublished" content="{{ node.field_date.value|date('c') }}">
+      <i class="fas fa-calendar-alt mr-1"></i>Publié le {{ node.field_date.value|date('d/m/Y') }}
+    </p>
+    {% if node.field_pdf.entity %}
+      <div class="mt-4">
+        <a href="{{ file_url(node.field_pdf.entity.uri.value) }}" class="btn-primary inline-block" aria-label="Télécharger le bulletin communal {{ node.title.value }}" target="_blank">
+          <i class="fas fa-download mr-2"></i>Télécharger le PDF
+        </a>
+      </div>
+    {% endif %}
+    <div class="card-text mt-4" itemprop="description">
+      {{ node.body.value|raw }}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token|raw }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token|raw }}">
+    <js-placeholder token="{{ placeholder_token|raw }}">
+  </head>
+  <body{{ attributes }}>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded">Aller au contenu principal</a>
+
+    {{ page_top }}
+
+    <header class="header-bg text-white shadow-lg" role="banner">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <img src="https://via.placeholder.com/150x50/ffffff/1e40af?text=Logo+Mairie+Morton" alt="Logo de la Mairie de Morton" class="h-12 mr-4">
+            <h1 class="text-2xl font-bold">Mairie de Morton</h1>
+          </div>
+          <nav class="hidden md:flex space-x-6" role="navigation" aria-label="Menu principal">
+            <a href="/" class="hover:text-blue-200 transition-colors focus-visible" aria-label="Accueil">Accueil</a>
+            <a href="/services" class="hover:text-blue-200 transition-colors focus-visible" aria-label="Services">Services</a>
+            <div class="relative group">
+              <button class="hover:text-blue-200 transition-colors focus-visible flex items-center" aria-haspopup="true" aria-expanded="false">
+                Vie communale <i class="fas fa-chevron-down ml-1"></i>
+              </button>
+              <div class="absolute hidden group-hover:block bg-white text-gray-800 shadow-lg rounded mt-2 py-2 w-48 z-10">
+                <a href="/conseil-municipal" class="block px-4 py-2 hover:bg-gray-100" aria-label="Conseil municipal">Conseil municipal</a>
+                <a href="/bulletins" class="block px-4 py-2 hover:bg-gray-100" aria-label="Bulletins communaux">Bulletins communaux</a>
+                <a href="/evenements" class="block px-4 py-2 hover:bg-gray-100" aria-label="Événements">Événements</a>
+              </div>
+            </div>
+            <a href="/contact" class="hover:text-blue-200 transition-colors focus-visible" aria-label="Contact">Contact</a>
+          </nav>
+          <button class="hamburger md:hidden focus-visible" aria-label="Ouvrir le menu" aria-expanded="false">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+        <nav class="nav-menu hidden md:hidden mt-4" role="navigation" aria-label="Menu mobile">
+          <a href="/" class="block py-2 hover:text-blue-200 transition-colors" aria-label="Accueil">Accueil</a>
+          <a href="/services" class="block py-2 hover:text-blue-200 transition-colors" aria-label="Services">Services</a>
+          <a href="/conseil-municipal" class="block py-2 hover:text-blue-200 transition-colors" aria-label="Conseil municipal">Conseil municipal</a>
+          <a href="/bulletins" class="block py-2 hover:text-blue-200 transition-colors" aria-label="Bulletins communaux">Bulletins communaux</a>
+          <a href="/evenements" class="block py-2 hover:text-blue-200 transition-colors" aria-label="Événements">Événements</a>
+          <a href="/contact" class="block py-2 hover:text-blue-200 transition-colors" aria-label="Contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="container mx-auto px-4 py-8" role="main">
+      {{ page.content }}
+    </main>
+
+    <footer class="footer-bg text-white py-8" role="contentinfo">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-lg font-bold mb-4">Coordonnées</h3>
+            <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Mairie de Morton<br>Place de la République<br>86300 Morton</p>
+            <p class="mb-2"><i class="fas fa-phone mr-2"></i>05 49 00 00 00</p>
+            <p><i class="fas fa-envelope mr-2"></i>mairie@morton86.fr</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4">Liens utiles</h3>
+            <ul class="space-y-2">
+              <li><a href="/services" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Services municipaux">Services municipaux</a></li>
+              <li><a href="/bulletins" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Bulletins communaux">Bulletins communaux</a></li>
+              <li><a href="/evenements" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Événements">Événements</a></li>
+              <li><a href="/sitemap" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Plan du site">Plan du site</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold mb-4">Suivez-nous</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Facebook"><i class="fab fa-facebook-f text-xl"></i></a>
+              <a href="#" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Twitter"><i class="fab fa-twitter text-xl"></i></a>
+              <a href="#" class="hover:text-blue-300 transition-colors focus-visible" aria-label="Instagram"><i class="fab fa-instagram text-xl"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-600 mt-8 pt-4 text-center">
+          <p>&copy; 2025 Mairie de Morton. Tous droits réservés.</p>
+        </div>
+      </div>
+    </footer>
+
+    {{ page_bottom }}
+
+    <js-bottom-placeholder token="{{ placeholder_token|raw }}">
+  </body>
+</html>

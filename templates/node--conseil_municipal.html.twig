@@ -1,0 +1,19 @@
+<div class="fade-in">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">{{ node.title.value }}</h1>
+  <div class="responsive-grid">
+    {% for member in node.field_membres %}
+      <div class="card">
+        <img src="{{ member.entity.field_photo.entity.uri.value ? file_url(member.entity.field_photo.entity.uri.value) : 'https://via.placeholder.com/300x300/1e40af/ffffff?text=Photo+Membre' }}" alt="Photo de {{ member.entity.title.value }}" class="w-full h-48 object-cover">
+        <div class="card-content">
+          <h2 class="card-title">{{ member.entity.title.value }}</h2>
+          <p class="card-text">{{ member.entity.field_fonction.value }}</p>
+          {% if member.entity.field_rapport.entity %}
+            <a href="{{ file_url(member.entity.field_rapport.entity.uri.value) }}" class="btn-secondary inline-block mt-4" aria-label="Télécharger le rapport de {{ member.entity.title.value }}" target="_blank">
+              <i class="fas fa-download mr-2"></i>Télécharger le rapport
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

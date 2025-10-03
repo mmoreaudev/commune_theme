@@ -1,0 +1,24 @@
+<div class="fade-in">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">{{ node.title.value }}</h1>
+  <div class="responsive-grid">
+    {% for shop in node.field_magasins %}
+      <div class="card">
+        <div class="card-content">
+          <div class="flex items-center mb-4">
+            <i class="fas fa-store text-blue-600 text-2xl mr-3"></i>
+            <h2 class="card-title">{{ shop.entity.title.value }}</h2>
+          </div>
+          <p class="card-text mb-2">
+            <i class="fas fa-map-marker-alt mr-2"></i>{{ shop.entity.field_adresse.value }}
+          </p>
+          <p class="card-text mb-4">
+            <i class="fas fa-clock mr-2"></i>{{ shop.entity.field_horaires.value }}
+          </p>
+          <a href="{{ url('entity.node.canonical', {'node': shop.entity.id}) }}" class="btn-primary inline-block" aria-label="Voir les détails de {{ shop.entity.title.value }}">
+            <i class="fas fa-eye mr-2"></i>Voir les détails
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
