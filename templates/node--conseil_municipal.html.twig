@@ -1,0 +1,20 @@
+{# Conseil municipal - grid of members #}
+<section aria-labelledby="conseil-title">
+  <h1 id="conseil-title" class="text-3xl font-bold text-primary">{{ label }}</h1>
+  <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {% for member in content.field_membres %}
+      <div class="bg-white rounded-lg shadow p-4 flex items-center gap-4">
+        {% if member.entity.field_photo.entity %}
+          <img src="{{ file_url(member.entity.field_photo.entity.fileuri) }}" alt="Photo de {{ member.entity.name.value }}" class="h-20 w-20 rounded-full object-cover" />
+        {% endif %}
+        <div>
+          <div class="font-semibold">{{ member.entity.name.value }}</div>
+          <div class="text-sm text-muted">{{ member.entity.field_fonction.value }}</div>
+          {% if member.entity.field_rapport_pdf.uri %}
+            <a href="{{ file_url(member.entity.field_rapport_pdf.uri) }}" class="mt-2 text-accent text-sm inline-block">Voir le rapport (PDF)</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

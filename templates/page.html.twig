@@ -1,395 +1,111 @@
 {#
-/**
- * @file
- * Template principal pour les pages du thème Commune Moderne.
- *
- * Variables disponibles:
- * - logged_in: TRUE si l'utilisateur est connecté.
- * - is_admin: TRUE si l'utilisateur est administrateur.
- * - is_front: TRUE si nous sommes sur la page d'accueil.
- * - site_name: Nom du site.
- * - site_slogan: Slogan du site.
- * - page_title: Titre de la page courante.
- * - breadcrumb: Fil d'Ariane.
- * - page: Tableau des régions de la page.
- */
+  Page template for Morton Theme
+  Includes header with responsive menu, main content region and footer.
+  Accessibility: ARIA attributes, skip link, keyboard-focusable controls
 #}
-<!DOCTYPE html>
-<html{{ html_attributes.addClass('no-js').setAttribute('lang', 'fr') }}>
-<head>
-  <head-placeholder token="{{ placeholder_token }}">
-  <title>{{ head_title|safe_join(' | ') }}</title>
-  
-  {# Métadonnées essentielles pour le SEO et l'accessibilité #}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" content="#1e3a8a">
-  <meta name="color-scheme" content="light">
-  
-  {# PWA et performance #}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="//www.google-analytics.com">
-  
-  {# Polices optimisées #}
-  <link href="https://fonts.googleapis.com/css2?family=Marianne:wght@300;400;500;600;700;800&family=Spectral:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  
-  {# CDN - Tailwind CSS et Alpine.js #}
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'commune-primary': {
-              50: '#eff6ff',
-              100: '#dbeafe',
-              500: '#3b82f6',
-              600: '#2563eb',
-              700: '#1d4ed8',
-              800: '#1e40af',
-              900: '#1e3a8a'
-            },
-            'commune-secondary': {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857'
+<!doctype html>
+<html lang="fr">
+  <head>
+    <head-placeholder token="{{ placeholder_token }}"></head-placeholder>
+    <title>{{ head_title }}</title>
+    {{ attach_library('morton_theme/cdn') }}
+    {{ attach_library('morton_theme/global') }}
+    {# Tailwind inline config to ensure accessible color palette and reduced motion #}
+    <script>
+      tailwind = tailwind || {};
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#0f172a',
+              accent: '#0ea5a4',
+              muted: '#64748b'
             }
-          },
-          fontFamily: {
-            'sans': ['Marianne', 'system-ui', 'sans-serif'],
-            'serif': ['Spectral', 'Georgia', 'serif']
           }
         }
-      }
-    }
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  
-  {# Librairies personnalisées du thème #}
-  {{ attach_library('commune_theme/main') }}
-  {% if page.hero or is_front %}
-    {{ attach_library('commune_theme/commune-components') }}
-  {% endif %}
-  {% if logged_in %}
-    {{ attach_library('commune_theme/admin') }}
-  {% endif %}
-  
-  <css-placeholder token="{{ placeholder_token }}">
-  <js-placeholder token="{{ placeholder_token }}">
-</head>
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-white text-gray-900 font-sans leading-normal antialiased">
+    <a class="sr-only focus:not-sr-only" href="#main-content">Aller au contenu</a>
 
-<body{{ attributes.addClass([
-  'commune-theme',
-  is_front ? 'is-front' : 'is-not-front',
-  logged_in ? 'user-logged-in' : 'user-anonymous',
-  is_admin ? 'user-admin' : 'user-not-admin'
-]) }}>
-  
-  {# Lien d'évitement pour l'accessibilité RGAA #}
-  <div class="skip-links" aria-label="{{ 'Liens d\'évitement'|t }}">
-    <a href="#main-content" class="skip-link">
-      {{ 'Aller au contenu principal'|t }}
-    </a>
-    <a href="#main-navigation" class="skip-link">
-      {{ 'Aller au menu principal'|t }}
-    </a>
-    <a href="#footer" class="skip-link">
-      {{ 'Aller au pied de page'|t }}
-    </a>
-  </div>
-  
-  {# Détection JavaScript pour amélioration progressive #}
-  <script>
-    document.documentElement.classList.remove('no-js');
-    document.documentElement.classList.add('js');
-    
-    // Détection du support pour focus-visible
-    try {
-      document.querySelector(':focus-visible');
-    } catch (e) {
-      document.documentElement.classList.add('focus-visible-polyfill');
-    }
-  </script>
-  
-  {{ page_top }}
+    <header class="bg-white border-b" role="banner">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center gap-4">
+            <a href="{{ path('<front>') }}" class="flex items-center" aria-label="Accueil Morton">
+              <img src="/themes/morton_theme/logo.svg" alt="Logo Morton" class="h-10 w-auto"/>
+              <span class="ml-3 text-xl font-semibold text-primary">Morton (86)</span>
+            </a>
+          </div>
 
-  {# Bandeau d'urgence conditionnel #}
-  {% if page.header_top %}
-    <div class="emergency-banner" role="alert" aria-live="polite">
-      <div class="container">
-        {{ page.header_top }}
-      </div>
-    </div>
-  {% endif %}
-  
-  {# En-tête principal avec structure sémantique #}
-  <header class="site-header" role="banner" 
-          itemscope itemtype="https://schema.org/GovernmentOrganization">
-    
-    {# Barre d'accessibilité et services rapides #}
-    <div class="header-utility">
-      <div class="container">
-        <div class="utility-nav">
-          <nav aria-label="{{ 'Navigation utilitaire'|t }}">
-            <ul class="utility-links">
-              <li><a href="/contact">{{ 'Contact'|t }}</a></li>
-              <li><a href="/horaires">{{ 'Horaires'|t }}</a></li>
-              <li><a href="/urgences">{{ 'Urgences'|t }}</a></li>
-              <li class="accessibility-tools">
-                <button type="button" class="font-size-toggle" aria-label="{{ 'Modifier la taille du texte'|t }}">
-                  <span class="sr-only">{{ 'Taille du texte'|t }}</span>
-                  A+
-                </button>
-              </li>
-            </ul>
+          <nav class="hidden md:flex md:items-center md:space-x-6" aria-label="Menu principal">
+            {{ page.primary_menu }}
           </nav>
-        </div>
-      </div>
-    </div>
-    
-    {# En-tête principal #}
-    <div class="header-main">
-      <div class="container">
-        <div class="header-content">
-          
-          {# Branding de la commune #}
-          <div class="site-branding">
-            {% if page.logo %}
-              {{ page.logo }}
-            {% elseif logo %}
-              <a href="{{ path('<front>') }}" class="site-logo" 
-                 rel="home" itemprop="url"
-                 aria-label="{{ 'Retour à l\'accueil de'|t }} {{ site_name }}">
-                <img src="{{ logo }}" alt="" itemprop="logo" 
-                     width="80" height="80" loading="eager">
-              </a>
-            {% endif %}
-            
-            <div class="site-identity">
-              {% if site_name %}
-                <h1 class="site-name" itemprop="name">
-                  <a href="{{ path('<front>') }}" rel="home">{{ site_name }}</a>
-                </h1>
-              {% endif %}
-              {% if site_slogan %}
-                <p class="site-slogan" itemprop="description">{{ site_slogan }}</p>
-              {% endif %}
-            </div>
+
+          <div class="flex items-center md:hidden">
+            <button id="morton-menu-toggle" aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
           </div>
-          
-          {# Navigation principale #}
-          {% if page.primary_menu %}
-            <nav class="main-navigation" id="main-navigation" 
-                 role="navigation" aria-label="{{ 'Menu principal'|t }}">
-              {{ page.primary_menu }}
-            </nav>
-          {% endif %}
-          
-          {# Bouton menu mobile #}
-          <button type="button" class="mobile-menu-toggle" 
-                  aria-controls="mobile-menu" aria-expanded="false"
-                  aria-label="{{ 'Ouvrir le menu'|t }}">
-            <span class="hamburger">
-              <span class="hamburger-line"></span>
-              <span class="hamburger-line"></span>
-              <span class="hamburger-line"></span>
-            </span>
-            <span class="menu-text">{{ 'Menu'|t }}</span>
-          </button>
-          
         </div>
       </div>
-    </div>
-    
-    {# Menu mobile #}
-    {% if page.mobile_menu %}
-      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-        <div class="mobile-menu-content">
-          {{ page.mobile_menu }}
+
+      <!-- Mobile menu, show/hide based on menu state. -->
+      <div id="mobile-menu" class="hidden md:hidden" role="navigation" aria-label="Menu mobile">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          {{ page.primary_menu }}
         </div>
       </div>
-    {% endif %}
-    
-  </header>
+    </header>
 
-  {# Zone héro moderne #}
-  {% if page.hero %}
-    <section class="hero-section" role="banner">
-      <div class="hero-container">
-        {{ page.hero }}
-      </div>
-    </section>
-  {% endif %}
-
-  {# Fil d'Ariane #}
-  {% if breadcrumb and not is_front %}
-    <nav class="breadcrumb-wrapper" role="navigation" 
-         aria-label="{{ 'Fil d\'Ariane'|t }}">
-      <div class="container">
-        {{ breadcrumb }}
-      </div>
-    </nav>
-  {% endif %}
-
-  {# Zone actualités et événements pour la page d'accueil #}
-  {% if is_front %}
-    <section class="front-highlights commune-section">
-      <div class="container">
-        {% if page.news %}
-          <div class="news-section">
-            <h2 class="section-title">{{ 'Actualités'|t }}</h2>
-            {{ page.news }}
-          </div>
+    <main id="main-content" class="flex-auto" role="main">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% if messages %}
+          <div class="mb-4">{{ messages }}</div>
         {% endif %}
-        
-        {% if page.events %}
-          <div class="events-section">
-            <h2 class="section-title">{{ 'Événements à venir'|t }}</h2>
-            {{ page.events }}
-          </div>
-        {% endif %}
-        
-        {% if page.services %}
-          <div class="services-section">
-            <h2 class="section-title">{{ 'Services en ligne'|t }}</h2>
-            {{ page.services }}
-          </div>
-        {% endif %}
-      </div>
-    </section>
-  {% endif %}
 
-  {# Contenu principal avec layout moderne #}
-  <main class="main-content commune-section" id="main-content" role="main">
-    <div class="container">
-      {# Messages système #}
-      {% if page.highlighted %}
-        <div class="highlighted-section">
-          {{ page.highlighted }}
-        </div>
-      {% endif %}
-      
-      {# Messages d'aide #}
-      {% if page.help %}
-        <div class="help-section">
-          {{ page.help }}
-        </div>
-      {% endif %}
-
-      <div class="content-layout {{ page.sidebar_first ? 'has-sidebar' : 'no-sidebar' }}">
-        {# Contenu principal #}
-        <div class="content-main">
-          {% if page_title and not is_front %}
-            <header class="page-header">
-              <h1 class="page-title">{{ page_title }}</h1>
-            </header>
-          {% endif %}
-          
-          <div class="content-body">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div class="lg:col-span-8">
             {{ page.content }}
           </div>
+          <aside class="lg:col-span-4" role="complementary">
+            {{ page.sidebar_first }}
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-gray-50 border-t mt-12" role="contentinfo">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold">Contact</h3>
+            <p class="mt-2 text-sm text-muted">Mairie de Morton<br/>Adresse de la mairie<br/>Tél. : <a href="tel:+33000000000" class="text-accent">00 00 00 00 00</a></p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Liens utiles</h3>
+            <ul class="mt-2 space-y-1 text-sm">
+              <li><a href="#" class="text-primary hover:underline">Services municipaux</a></li>
+              <li><a href="#" class="text-primary hover:underline">Urbanisme</a></li>
+              <li><a href="#" class="text-primary hover:underline">Événements</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold">Réseaux sociaux</h3>
+            <div class="mt-2 flex items-center space-x-3">
+              <a href="#" class="text-muted hover:text-accent" aria-label="Facebook"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a>
+              <a href="#" class="text-muted hover:text-accent" aria-label="Twitter"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a>
+              <a href="#" class="text-muted hover:text-accent" aria-label="Instagram"><i class="fab fa-instagram fa-lg" aria-hidden="true"></i></a>
+            </div>
+          </div>
         </div>
 
-        {# Sidebar informations pratiques #}
-        {% if page.sidebar_first %}
-          <aside class="sidebar-first" role="complementary" 
-                 aria-label="{{ 'Informations pratiques'|t }}">
-            <div class="sidebar-content">
-              <h2 class="sidebar-title">{{ 'Informations pratiques'|t }}</h2>
-              {{ page.sidebar_first }}
-            </div>
-          </aside>
-        {% endif %}
-        
-        {# Sidebar secondaire #}
-        {% if page.sidebar_second %}
-          <aside class="sidebar-second" role="complementary">
-            {{ page.sidebar_second }}
-          </aside>
-        {% endif %}
+        <div class="mt-8 text-xs text-muted">
+          <p>© {{ "now"|date("Y") }} Commune de Morton — Tous droits réservés.</p>
+        </div>
       </div>
-    </div>
-  </main>
+    </footer>
 
-  {# Pied de page moderne #}
-  <footer class="site-footer" id="footer" role="contentinfo">
-    <div class="footer-main">
-      <div class="container">
-        {% if page.footer_first or page.footer_second or page.footer_third or page.footer_fourth %}
-          <div class="footer-columns commune-grid commune-grid--4cols">
-            {% if page.footer_first %}
-              <div class="footer-column footer-mairie">
-                <h3 class="footer-title">{{ 'Mairie'|t }}</h3>
-                {{ page.footer_first }}
-              </div>
-            {% endif %}
-            
-            {% if page.footer_second %}
-              <div class="footer-column footer-links">
-                <h3 class="footer-title">{{ 'Liens utiles'|t }}</h3>
-                {{ page.footer_second }}
-              </div>
-            {% endif %}
-            
-            {% if page.footer_third %}
-              <div class="footer-column footer-contact">
-                <h3 class="footer-title">{{ 'Contact et horaires'|t }}</h3>
-                {{ page.footer_third }}
-              </div>
-            {% endif %}
-            
-            {% if page.footer_fourth %}
-              <div class="footer-column footer-social">
-                <h3 class="footer-title">{{ 'Suivez-nous'|t }}</h3>
-                {{ page.footer_fourth }}
-              </div>
-            {% endif %}
-          </div>
-        {% endif %}
-      </div>
-    </div>
-    
-    {# Pied de page légal #}
-    <div class="footer-bottom">
-      <div class="container">
-        {% if page.footer_bottom %}
-          {{ page.footer_bottom }}
-        {% else %}
-          <div class="footer-legal">
-            <div class="footer-legal-links">
-              <a href="/mentions-legales" class="footer-legal-link">{{ 'Mentions légales'|t }}</a>
-              <a href="/donnees-personnelles" class="footer-legal-link">{{ 'Données personnelles'|t }}</a>
-              <a href="/accessibilite" class="footer-legal-link">{{ 'Accessibilité'|t }}</a>
-              <a href="/plan-site" class="footer-legal-link">{{ 'Plan du site'|t }}</a>
-            </div>
-            
-            <div class="footer-copyright">
-              <p>© {{ "now"|date("Y") }} {{ site_name }} - {{ 'Tous droits réservés'|t }}</p>
-              <p class="compliance-badge">
-                <span class="rgaa-badge">{{ 'Site conforme RGAA 4.1'|t }}</span>
-              </p>
-            </div>
-          </div>
-        {% endif %}
-      </div>
-    </div>
-  </footer>
-
-  {{ page_bottom }}
-
-  {# Overlay pour le menu mobile #}
-  <div class="mobile-overlay" aria-hidden="true"></div>
-  
-  {# Bouton retour en haut #}
-  <button id="back-to-top" class="back-to-top" aria-label="{{ 'Retour en haut de la page'|t }}">
-    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
-      <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,8L16,12H13V16H11V12H8L12,8Z"/>
-    </svg>
-  </button>
-
-</body>
+  </body>
 </html>

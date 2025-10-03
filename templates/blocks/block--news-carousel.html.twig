@@ -1,0 +1,20 @@
+{# Block: actualités - carousel simple compatible Flowbite #}
+<div class="relative" data-carousel="static">
+  <div class="relative h-56 overflow-hidden rounded-lg">
+    {% for item in content %}
+      <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <img src="{{ file_url(item['#node'].field_image.entity.fileuri) }}" class="absolute block w-full h-full object-cover" alt="{{ item['#node'].field_image.alt }}" />
+        <div class="absolute bottom-0 left-0 p-4 bg-gradient-to-t from-black/60 to-transparent w-full text-white">
+          <h3 class="font-semibold">{{ item['#node'].label }}</h3>
+          <p class="text-sm">{{ item['#node'].field_date.value|date('d F Y') }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <button type="button" class="absolute top-1/2 left-4 -translate-y-1/2" data-carousel-prev aria-label="Précédent">
+    <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/80 text-primary">‹</span>
+  </button>
+  <button type="button" class="absolute top-1/2 right-4 -translate-y-1/2" data-carousel-next aria-label="Suivant">
+    <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/80 text-primary">›</span>
+  </button>
+</div>
