@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Commune Theme - CSS Critique (Above-the-fold)
+   À inliner dans le <head> pour optimiser le rendu initial
+   ========================================================================== */
+
+/* Styles critiques pour le chargement initial */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+  color: #1f2937;
+  background: #ffffff;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #1f2937;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  z-index: 100;
+}
+
+.site-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 80px;
+}
+
+.site-branding {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-logo img {
+  height: 60px;
+  width: auto;
+  max-width: 120px;
+}
+
+.site-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.site-name a {
+  color: #1f2937;
+  text-decoration: none;
+}
+
+.main-navigation {
+  background: #1e3a8a;
+}
+
+.menu-wrapper ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.menu-wrapper a {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.main-content {
+  min-height: 60vh;
+  padding: 2rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Mobile-first responsive */
+@media (max-width: 991px) {
+  .site-header .container {
+    min-height: 60px;
+    flex-wrap: wrap;
+  }
+  
+  .menu-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1e3a8a;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .menu-wrapper ul {
+    flex-direction: column;
+  }
+}
+
+/* Préchargement des polices critiques */
+@font-face {
+  font-family: 'Marianne';
+  src: url('/themes/custom/commune_theme/assets/fonts/marianne-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

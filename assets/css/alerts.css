@@ -1,0 +1,153 @@
+/* ==========================================================================
+   Commune Theme - Styles pour les alertes
+   ========================================================================== */
+
+.commune-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease-in-out;
+}
+
+.commune-alert.alert-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.commune-alert.alert-dismissing {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Types d'alertes avec couleurs accessibles */
+.alert-info {
+  background-color: #eff6ff;
+  border-color: #3b82f6;
+  color: #1e40af;
+}
+
+.alert-warning {
+  background-color: #fffbeb;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.alert-error,
+.alert-urgent {
+  background-color: #fef2f2;
+  border-color: #ef4444;
+  color: #dc2626;
+}
+
+.alert-success {
+  background-color: #f0fdf4;
+  border-color: #22c55e;
+  color: #16a34a;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.alert-message {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.alert-timestamp {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.alert-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  color: currentColor;
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.alert-close:hover,
+.alert-close:focus {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Mode contraste élevé */
+@media (prefers-contrast: high) {
+  .commune-alert {
+    border-width: 2px;
+    border-style: solid;
+  }
+  
+  .alert-info { border-color: #1e40af; }
+  .alert-warning { border-color: #92400e; }
+  .alert-error, .alert-urgent { border-color: #dc2626; }
+  .alert-success { border-color: #16a34a; }
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .commune-alert {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .alert-title {
+    font-size: 1rem;
+  }
+  
+  .alert-message {
+    font-size: 0.875rem;
+  }
+  
+  .alert-close {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}
+
+/* Animation d'entrée */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.commune-alert.alert-show {
+  animation: slideInDown 0.3s ease-out;
+}

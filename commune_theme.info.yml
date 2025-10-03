@@ -1,0 +1,93 @@
+name: Commune Theme
+type: theme
+description: 'Theme moderne et accessible pour site de commune - Compatible Drupal 11.x et RGAA'
+package: Custom
+version: '11.1.0'
+base theme: false
+core_version_requirement: ^10.3 || ^11.0
+php: '>=8.2'
+
+regions:
+  header_top: 'Bandeau supérieur'
+  header: 'En-tête principal'
+  logo: 'Zone logo'
+  primary_menu: 'Menu principal'
+  mobile_menu: 'Menu mobile'
+  breadcrumb: 'Fil d Ariane'
+  hero: 'Zone hero'
+  highlighted: 'Mise en avant'
+  help: Aide
+  content: 'Contenu principal'
+  sidebar_first: 'Informations pratiques'
+  sidebar_second: 'Barre latérale secondaire'
+  events: 'Événements à venir'
+  news: 'Actualités'
+  services: 'Services en ligne'
+  footer_first: 'Informations mairie'
+  footer_second: 'Liens utiles'
+  footer_third: 'Horaires et contact'
+  footer_fourth: 'Réseaux sociaux'
+  footer_bottom: 'Mentions légales'
+
+libraries:
+  - commune_theme/global-css
+  - commune_theme/global-js
+
+libraries-override:
+  system/base:
+    css:
+      component:
+        /core/themes/stable9/css/system/components/ajax-progress.module.css: false
+        /core/themes/stable9/css/system/components/align.module.css: false
+        /core/themes/stable9/css/system/components/autocomplete-loading.module.css: false
+        /core/themes/stable9/css/system/components/fieldgroup.module.css: false
+        /core/themes/stable9/css/system/components/container-inline.module.css: false
+        /core/themes/stable9/css/system/components/clearfix.module.css: false
+        /core/themes/stable9/css/system/components/details.module.css: false
+        /core/themes/stable9/css/system/components/hidden.module.css: false
+        /core/themes/stable9/css/system/components/item-list.module.css: false
+        /core/themes/stable9/css/system/components/js.module.css: false
+        /core/themes/stable9/css/system/components/nowrap.module.css: false
+        /core/themes/stable9/css/system/components/position-container.module.css: false
+        /core/themes/stable9/css/system/components/progress.module.css: false
+        /core/themes/stable9/css/system/components/reset-appearance.module.css: false
+        /core/themes/stable9/css/system/components/resize.module.css: false
+        /core/themes/stable9/css/system/components/sticky-header.module.css: false
+        /core/themes/stable9/css/system/components/system-status-counter.css: false
+        /core/themes/stable9/css/system/components/system-status-report-counters.css: false
+        /core/themes/stable9/css/system/components/system-status-report-general-info.css: false
+        /core/themes/stable9/css/system/components/tablesort.module.css: false
+        /core/themes/stable9/css/system/components/tree-child.module.css: false
+
+# Configuration des breakpoints pour le responsive
+breakpoints:
+  commune_theme.xs:
+    label: 'Extra Small (480px)'
+    mediaQuery: 'all and (max-width: 480px)'
+    weight: 0
+    multipliers:
+      - 1x
+  commune_theme.sm:
+    label: 'Small (768px)'
+    mediaQuery: 'all and (max-width: 768px)'
+    weight: 1
+    multipliers:
+      - 1x
+  commune_theme.md:
+    label: 'Medium (992px)'
+    mediaQuery: 'all and (max-width: 992px)'
+    weight: 2
+    multipliers:
+      - 1x
+  commune_theme.lg:
+    label: 'Large (1200px)'
+    mediaQuery: 'all and (max-width: 1200px)'
+    weight: 3
+    multipliers:
+      - 1x
+  commune_theme.xl:
+    label: 'Extra Large (1400px+)'
+    mediaQuery: 'all and (min-width: 1401px)'
+    weight: 4
+    multipliers:
+      - 1x

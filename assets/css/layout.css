@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Commune Theme - Layout CSS
+   Styles de mise en page et grille
+   ========================================================================== */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 576px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+.content-layout {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 992px) {
+  .content-layout {
+    grid-template-columns: 1fr 280px;
+  }
+  
+  .has-sidebar-first .content-layout {
+    grid-template-columns: 280px 1fr;
+  }
+  
+  .has-two-sidebars .content-layout {
+    grid-template-columns: 200px 1fr 200px;
+  }
+}
+
+.site-header {
+  position: relative;
+  z-index: 100;
+}
+
+.main-content {
+  min-height: 60vh;
+}
+
+.site-footer {
+  margin-top: 3rem;
+}
+
+.footer-columns {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 576px) {
+  .footer-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .footer-columns {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

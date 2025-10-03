@@ -1,0 +1,421 @@
+{#
+/**
+ * @file
+ * Template pour les événements
+ */
+#}
+
+{{ attach_library('commune_theme/cards') }}
+
+{% set classes = [
+  'node',
+  'node--type-' ~ node.bundle|clean_class,
+  node.isPromoted() ? 'node--promoted',
+  node.isSticky() ? 'node--sticky',
+  not node.isPublished() ? 'node--unpublished',
+  view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  'card',
+  'card--event'
+] %}
+
+<article{{ attributes.addClass(classes) }} itemscope itemtype="https://schema.org/Event">
+  
+  {# Image de l'événement #}
+  {% if content.field_image %}
+    <div class="card-header">
+      {{ content.field_image }}
+      
+      {# Date de l'événement en badge #}
+      {% if content.field_date_event %}
+        <div class="card-date" itemprop="startDate" datetime="{{ node.field_date_event.value|date('c') }}">
+          <span class="card-date-day">{{ node.field_date_event.value|date('d') }}</span>
+          <span class="card-date-month">{{ node.field_date_event.value|date('M') }}</span>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="card-content">
+    {# Métadonnées de l'événement #}
+    <div class="card-meta">
+      {% if content.field_date_event %}
+        <div class="card-meta-item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z"/>
+          </svg>
+          <time datetime="{{ node.field_date_event.value|date('c') }}">
+            {{ node.field_date_event.value|date('d/m/Y à H:i') }}
+          </time>
+        </div>
+      {% endif %}
+      
+      {% if content.field_lieu %}
+        <div class="card-meta-item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22S19,14.25 19,9A7,7 0 0,0 12,2Z"/>
+          </svg>
+          <span itemprop="location">{{ content.field_lieu }}</span>
+        </div>
+      {% endif %}
+      
+      {% if content.field_price %}
+        <div class="card-meta-item">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
+          </svg>
+          <span itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span itemprop="price">{{ content.field_price }}</span>
+          </span>
+        </div>
+      {% endif %}
+    </div>
+
+    {# Titre de l'événement #}
+    {{ title_prefix }}
+    {% if not page %}
+      <h2{{ title_attributes.addClass('card-title') }} itemprop="name">
+        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+      </h2>
+    {% else %}
+      <h1{{ title_attributes.addClass('page-title') }} itemprop="name">{{ label }}</h1>
+    {% endif %}
+    {{ title_suffix }}
+
+    {# Description de l'événement #}
+    {% if teaser %}
+      {% if content.body.0['#text'] %}
+        <p class="card-excerpt" itemprop="description">
+          {{ content.body.0['#text']|striptags|truncate(120) }}
+        </p>
+      {% endif %}
+    {% else %}
+      <div{{ content_attributes.addClass('node-content') }} itemprop="description">
+        {{ content|without('field_image', 'field_date_event', 'field_lieu', 'field_price', 'field_organizer', 'field_category') }}
+      </div>
+    {% endif %}
+
+    {# Organisateur #}
+    {% if content.field_organizer %}
+      <div class="event-organizer" itemprop="organizer" itemscope itemtype="https://schema.org/Organization">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M16,4C16.88,4 17.67,4.38 18.12,5H20A2,2 0 0,1 22,7V19A2,2 0 0,1 20,21H4A2,2 0 0,1 2,19V7A2,2 0 0,1 4,5H5.88C6.33,4.38 7.12,4 8,4H16M16,6H8A1,1 0 0,0 7,7V8H17V7A1,1 0 0,0 16,6Z"/>
+        </svg>
+        <span class="organizer-label">{{ 'Organisé par'|t }} :</span>
+        <span itemprop="name">{{ content.field_organizer }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  {# Pied de l'événement #}
+  {% if teaser %}
+    <div class="card-footer">
+      <div class="card-actions">
+        <a href="{{ url }}" class="card-link" aria-label="{{ 'Voir les détails de l\'événement : ' ~ label }}">
+          {{ 'Voir les détails'|t }}
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"/>
+          </svg>
+        </a>
+        
+        {# Bouton d'ajout au calendrier #}
+        {% if content.field_date_event %}
+          <a href="#" class="card-link card-link--calendar" 
+             onclick="addToCalendar(event, '{{ label|escape('js') }}', '{{ node.field_date_event.value|date('Y-m-d\\TH:i:s') }}', '{{ content.field_lieu|striptags|escape('js') }}')"
+             aria-label="{{ 'Ajouter au calendrier'|t }}">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19M12,15V17H7V15H12M17,13V15H7V13H17M17,11V13H7V11H17Z"/>
+            </svg>
+            {{ 'Ajouter au calendrier'|t }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    {# Boutons d'action pour la vue complète #}
+    <div class="event-actions">
+      {% if content.field_registration_link %}
+        <a href="{{ content.field_registration_link.0['#url'] }}" class="btn btn--primary btn--large">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+          </svg>
+          {{ 'S\'inscrire'|t }}
+        </a>
+      {% endif %}
+      
+      {% if content.field_date_event %}
+        <button class="btn btn--secondary" 
+                onclick="addToCalendar(event, '{{ label|escape('js') }}', '{{ node.field_date_event.value|date('Y-m-d\\TH:i:s') }}', '{{ content.field_lieu|striptags|escape('js') }}')"
+                aria-label="{{ 'Ajouter au calendrier'|t }}">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M19,3H18V1H16V3H8V1H6V3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19M12,15V17H7V15H12M17,13V15H7V13H17M17,11V13H7V11H17Z"/>
+          </svg>
+          {{ 'Ajouter au calendrier'|t }}
+        </button>
+      {% endif %}
+      
+      <button class="btn btn--secondary" onclick="shareEvent('{{ url }}', '{{ label|escape('js') }}')">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z"/>
+        </svg>
+        {{ 'Partager'|t }}
+      </button>
+    </div>
+    
+    {# Événements similaires #}
+    {% if content.field_related_events %}
+      <section class="related-events">
+        <h3>{{ 'Événements similaires'|t }}</h3>
+        {{ content.field_related_events }}
+      </section>
+    {% endif %}
+  {% endif %}
+
+</article>
+
+{# JavaScript pour les fonctionnalités d'événement #}
+<script>
+function addToCalendar(event, title, date, location) {
+  event.preventDefault();
+  
+  const startDate = new Date(date);
+  const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000); // +2h par défaut
+  
+  const formatDate = (date) => {
+    return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  };
+  
+  const calendarData = {
+    google: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDate(startDate)}/${formatDate(endDate)}&location=${encodeURIComponent(location)}`,
+    outlook: `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(title)}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&location=${encodeURIComponent(location)}`,
+    ics: generateICS(title, startDate, endDate, location)
+  };
+  
+  // Créer un menu de choix
+  const menu = document.createElement('div');
+  menu.className = 'calendar-menu';
+  menu.innerHTML = `
+    <div class="calendar-menu-content">
+      <h4>Ajouter à votre calendrier</h4>
+      <a href="${calendarData.google}" target="_blank" class="calendar-option">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Google Calendar
+      </a>
+      <a href="${calendarData.outlook}" target="_blank" class="calendar-option">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#0078d4" d="M24 12v6.375C24 20.262 22.262 22 20.375 22H3.625C1.738 22 0 20.262 0 18.375V5.625C0 3.738 1.738 2 3.625 2h16.75C22.262 2 24 3.738 24 5.625V12z"/><path fill="#fff" d="M12 6.5C8.96 6.5 6.5 8.96 6.5 12s2.46 5.5 5.5 5.5 5.5-2.46 5.5-5.5-2.46-5.5-5.5-5.5zm0 8.5c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+        Outlook
+      </a>
+      <a href="${calendarData.ics}" download="${title}.ics" class="calendar-option">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>
+        Fichier .ICS
+      </a>
+      <button class="calendar-close" onclick="this.parentElement.parentElement.remove()">×</button>
+    </div>
+  `;
+  
+  document.body.appendChild(menu);
+  
+  // Centrer le menu
+  const rect = event.target.getBoundingClientRect();
+  menu.style.position = 'fixed';
+  menu.style.top = rect.bottom + 10 + 'px';
+  menu.style.left = rect.left + 'px';
+  menu.style.zIndex = '9999';
+  
+  // Fermer en cliquant ailleurs
+  setTimeout(() => {
+    document.addEventListener('click', function closeMenu(e) {
+      if (!menu.contains(e.target)) {
+        menu.remove();
+        document.removeEventListener('click', closeMenu);
+      }
+    });
+  }, 100);
+}
+
+function generateICS(title, startDate, endDate, location) {
+  const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+BEGIN:VEVENT
+UID:${Date.now()}@commune
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTSTART:${startDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTEND:${endDate.toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+SUMMARY:${title}
+LOCATION:${location}
+END:VEVENT
+END:VCALENDAR`;
+  
+  return 'data:text/calendar;charset=utf8,' + encodeURIComponent(ics);
+}
+
+function shareEvent(url, title) {
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      url: url
+    });
+  } else {
+    // Fallback: copier dans le presse-papier
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Lien copié dans le presse-papier !');
+    });
+  }
+}
+</script>
+
+{# Styles CSS pour le menu calendrier #}
+<style>
+.calendar-menu {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.calendar-menu-content {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-width: 250px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.calendar-menu h4 {
+  margin: 0 0 1rem 0;
+  color: var(--color-primary);
+  font-size: 1.1rem;
+}
+
+.calendar-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  text-decoration: none;
+  color: var(--color-text);
+  border-radius: 4px;
+  transition: all 0.2s;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-option:hover {
+  background: var(--color-background-alt);
+  color: var(--color-primary);
+}
+
+.calendar-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text-light);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-close:hover {
+  background: var(--color-background-alt);
+  color: var(--color-text);
+}
+
+.event-organizer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+}
+
+.organizer-label {
+  font-weight: 500;
+}
+
+.event-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: var(--font-size-sm);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn--secondary {
+  background: var(--color-background-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn--secondary:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.btn--large {
+  padding: 1rem 2rem;
+  font-size: var(--font-size-md);
+}
+
+.related-events {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-border);
+}
+
+.related-events h3 {
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .event-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .calendar-menu-content {
+    min-width: 90vw;
+    max-width: 300px;
+  }
+}
+</style>

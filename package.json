@@ -1,0 +1,108 @@
+{
+  "name": "commune-theme-build",
+  "version": "11.1.0",
+  "description": "Build system pour le thème Commune Drupal",
+  "main": "assets/js/main.js",
+  "scripts": {
+    "build": "npm run build:css && npm run build:js && npm run optimize:images",
+    "build:css": "postcss src/styles.css -o assets/css/global.css --map",
+    "build:css:prod": "postcss src/styles.css -o assets/css/global.css --env production",
+    "build:js": "esbuild src/main.js --bundle --outfile=assets/js/main.min.js --sourcemap",
+    "build:js:prod": "esbuild src/main.js --bundle --minify --outfile=assets/js/main.min.js",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:css": "npm run build:css -- --watch",
+    "watch:js": "npm run build:js -- --watch",
+    "dev": "npm run watch",
+    "prod": "npm run build:css:prod && npm run build:js:prod && npm run optimize:images",
+    "optimize:images": "imagemin 'src/images/**/*.{jpg,jpeg,png,svg}' --out-dir='assets/images'",
+    "lint:css": "stylelint 'src/**/*.css'",
+    "lint:js": "eslint 'src/**/*.js'",
+    "lint": "npm run lint:css && npm run lint:js",
+    "test:a11y": "pa11y http://localhost/your-site --reporter cli",
+    "test:lighthouse": "lighthouse http://localhost/your-site --output html --output-path reports/lighthouse.html",
+    "serve": "browser-sync start --proxy 'localhost/your-drupal-site' --files 'assets/**/*'"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.5",
+    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.1",
+    "esbuild": "^0.19.8",
+    "eslint": "^8.55.0",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0",
+    "imagemin": "^8.0.1",
+    "imagemin-cli": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-svgo": "^10.0.1",
+    "npm-run-all": "^4.1.5",
+    "browser-sync": "^2.29.3",
+    "pa11y": "^6.2.3",
+    "lighthouse": "^11.4.0"
+  },
+  "dependencies": {
+    "swiper": "^11.0.5",
+    "leaflet": "^1.9.4"
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {},
+      "autoprefixer": {}
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "jquery": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "globals": {
+      "Drupal": "readonly",
+      "drupalSettings": "readonly"
+    },
+    "rules": {
+      "no-unused-vars": "warn",
+      "no-console": "warn"
+    }
+  },
+  "stylelint": {
+    "extends": ["stylelint-config-standard"],
+    "rules": {
+      "color-hex-length": "long",
+      "declaration-block-trailing-semicolon": "always",
+      "indentation": 2
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "not IE 11"
+  ],
+  "keywords": [
+    "drupal",
+    "theme",
+    "commune",
+    "accessible",
+    "responsive",
+    "rgaa"
+  ],
+  "author": "Votre nom",
+  "license": "GPL-2.0+",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-username/commune-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/votre-username/commune-theme/issues"
+  },
+  "homepage": "https://github.com/votre-username/commune-theme#readme"
+}

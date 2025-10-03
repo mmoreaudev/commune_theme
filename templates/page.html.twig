@@ -1,0 +1,346 @@
+{#
+/**
+ * @file
+ * Template principal pour les pages du thème Commune.
+ *
+ * Variables disponibles:
+ * - logged_in: TRUE si l'utilisateur est connecté.
+ * - is_admin: TRUE si l'utilisateur est administrateur.
+ * - is_front: TRUE si nous sommes sur la page d'accueil.
+ * - site_name: Nom du site.
+ * - site_slogan: Slogan du site.
+ * - page_title: Titre de la page courante.
+ * - breadcrumb: Fil d'Ariane.
+ * - page: Tableau des régions de la page.
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes.addClass('no-js') }}>
+<head>
+  <head-placeholder token="{{ placeholder_token }}">
+  <title>{{ head_title|safe_join(' | ') }}</title>
+  
+  {# Métadonnées essentielles pour le SEO et l'accessibilité #}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#1e3a8a">
+  
+  {# Préconnexion aux domaines externes pour les performances #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marianne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  {# CSS critique inline pour le Above-the-Fold #}
+  {{ attach_library('commune_theme/critical-css') }}
+  {{ attach_library('commune_theme/header') }}
+  {{ attach_library('commune_theme/mobile-nav') }}
+  
+  <css-placeholder token="{{ placeholder_token }}">
+  <js-placeholder token="{{ placeholder_token }}">
+</head>
+
+<body{{ attributes.addClass('commune-theme').addClass(is_front ? 'is-front' : 'is-not-front') }}>
+  {# Lien d'évitement pour l'accessibilité #}
+  <a href="#main-content" class="skip-link visually-hidden focusable" 
+     aria-label="{{ 'Aller au contenu principal'|t }}">
+    {{ 'Aller au contenu principal'|t }}
+  </a>
+  
+  {# Indicateur de JavaScript pour CSS #}
+  <script>document.documentElement.classList.remove('no-js');</script>
+  
+  {{ page_top }}
+
+  {# Bandeau supérieur avec informations urgentes #}
+  {% if page.header_top %}
+    <div class="header-top" role="banner">
+      <div class="container">
+        {{ page.header_top }}
+      </div>
+    </div>
+  {% endif %}
+  
+  {# En-tête principal moderne #}
+  <header class="site-header" role="banner" itemscope itemtype="https://schema.org/Organization">
+    <div class="header-container">
+      {# Logo et informations de la commune #}
+      <div class="site-branding">
+        {% if page.logo %}
+          {{ page.logo }}
+        {% elseif logo %}
+          <a href="{{ path('<front>') }}" class="site-logo" 
+             aria-label="{{ 'Retour à l\'accueil'|t }}"
+             itemprop="url">
+            <img src="{{ logo }}" alt="{{ site_name }}" itemprop="logo" loading="eager">
+          </a>
+        {% endif %}
+        
+        <div class="site-info">
+          {% if site_name %}
+            <div class="site-name" itemprop="name">
+              <a href="{{ path('<front>') }}" rel="home">{{ site_name }}</a>
+            </div>
+          {% endif %}
+          
+          {% if site_slogan %}
+            <div class="site-slogan" itemprop="description">{{ site_slogan }}</div>
+          {% endif %}
+        </div>
+      </div>
+      
+      {# Outils d'accessibilité et recherche #}
+      <div class="header-tools">
+        <div class="search-widget">
+          <button type="button" class="search-toggle" aria-label="{{ 'Ouvrir la recherche'|t }}">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="accessibility-tools">
+          <button type="button" class="contrast-toggle" 
+                  aria-label="{{ 'Activer/désactiver le contraste élevé'|t }}">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12,18A6,6,0,0,1,6,12,6,6,0,0,1,12,6a6,6,0,0,1,6,6A6,6,0,0,1,12,18ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,2a8,8,0,0,1,8,8,8,8,0,0,1-8,8Z"/>
+            </svg>
+          </button>
+          
+          <div class="font-size-controls">
+            <button type="button" class="font-btn font-small" data-size="small" aria-label="{{ 'Diminuer la taille du texte'|t }}">A-</button>
+            <button type="button" class="font-btn font-normal" data-size="normal" aria-label="{{ 'Taille normale du texte'|t }}">A</button>
+            <button type="button" class="font-btn font-large" data-size="large" aria-label="{{ 'Augmenter la taille du texte'|t }}">A+</button>
+          </div>
+        </div>
+        
+        {# Bouton menu mobile #}
+        <button class="mobile-menu-toggle" aria-expanded="false" 
+                aria-controls="primary-menu" 
+                aria-label="{{ 'Ouvrir/fermer le menu'|t }}">
+          <span class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span class="sr-only">Menu</span>
+        </button>
+      </div>
+    </div>
+    
+    {# Navigation principale #}
+    {% if page.primary_menu %}
+      <nav class="main-navigation" role="navigation" 
+           aria-label="{{ 'Navigation principale'|t }}">
+        <div class="nav-container">
+          <div class="menu-wrapper" id="primary-menu">
+            {{ page.primary_menu }}
+          </div>
+        </div>
+      </nav>
+    {% endif %}
+  </header>
+
+  {# Zone héro moderne #}
+  {% if page.hero %}
+    <section class="hero-section" role="banner">
+      {{ attach_library('commune_theme/hero') }}
+      <div class="hero-container">
+        {{ page.hero }}
+      </div>
+    </section>
+  {% endif %}
+
+  {# Fil d'Ariane #}
+  {% if breadcrumb and not is_front %}
+    <nav class="breadcrumb-wrapper" role="navigation" 
+         aria-label="{{ 'Fil d\'Ariane'|t }}">
+      <div class="breadcrumb-container">
+        {{ breadcrumb }}
+      </div>
+    </nav>
+  {% endif %}
+
+  {# Zone actualités et événements pour la page d'accueil #}
+  {% if is_front %}
+    <section class="front-highlights">
+      <div class="highlights-container">
+        {% if page.news %}
+          <div class="news-section">
+            <h2 class="section-title">{{ 'Actualités'|t }}</h2>
+            {{ page.news }}
+          </div>
+        {% endif %}
+        
+        {% if page.events %}
+          <div class="events-section">
+            <h2 class="section-title">{{ 'Événements à venir'|t }}</h2>
+            {{ page.events }}
+          </div>
+        {% endif %}
+        
+        {% if page.services %}
+          <div class="services-section">
+            <h2 class="section-title">{{ 'Services en ligne'|t }}</h2>
+            {{ page.services }}
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  {# Contenu principal avec layout moderne #}
+  <main class="main-content" id="main-content" role="main">
+    <div class="main-container">
+      {# Messages système #}
+      {% if page.highlighted %}
+        <div class="highlighted-section">
+          {{ page.highlighted }}
+        </div>
+      {% endif %}
+      
+      {# Messages d'aide #}
+      {% if page.help %}
+        <div class="help-section">
+          {{ page.help }}
+        </div>
+      {% endif %}
+
+      <div class="content-layout {{ page.sidebar_first ? 'has-sidebar' : 'no-sidebar' }}">
+        {# Contenu principal #}
+        <div class="content-main">
+          {% if page_title and not is_front %}
+            <header class="page-header">
+              <h1 class="page-title">{{ page_title }}</h1>
+              {% if page.breadcrumb %}
+                <div class="page-breadcrumb">
+                  {{ page.breadcrumb }}
+                </div>
+              {% endif %}
+            </header>
+          {% endif %}
+          
+          <div class="content-body">
+            {{ page.content }}
+          </div>
+        </div>
+
+        {# Sidebar informations pratiques #}
+        {% if page.sidebar_first %}
+          {{ attach_library('commune_theme/sidebar') }}
+          <aside class="sidebar-first" role="complementary" 
+                 aria-label="{{ 'Informations pratiques'|t }}">
+            <div class="sidebar-content">
+              <h2 class="sidebar-title">{{ 'Informations pratiques'|t }}</h2>
+              {{ page.sidebar_first }}
+            </div>
+          </aside>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+
+  {# Pied de page moderne #}
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-main">
+      <div class="footer-container">
+        {% if page.footer_first or page.footer_second or page.footer_third or page.footer_fourth %}
+          <div class="footer-columns">
+            {% if page.footer_first %}
+              <div class="footer-column footer-mairie">
+                <h3 class="footer-title">{{ 'Mairie'|t }}</h3>
+                {{ page.footer_first }}
+              </div>
+            {% endif %}
+            
+            {% if page.footer_second %}
+              <div class="footer-column footer-links">
+                <h3 class="footer-title">{{ 'Liens utiles'|t }}</h3>
+                {{ page.footer_second }}
+              </div>
+            {% endif %}
+            
+            {% if page.footer_third %}
+              <div class="footer-column footer-contact">
+                <h3 class="footer-title">{{ 'Contact et horaires'|t }}</h3>
+                {{ page.footer_third }}
+              </div>
+            {% endif %}
+            
+            {% if page.footer_fourth %}
+              <div class="footer-column footer-social">
+                <h3 class="footer-title">{{ 'Suivez-nous'|t }}</h3>
+                {{ page.footer_fourth }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    
+    {# Pied de page légal #}
+    <div class="footer-bottom">
+      {% if page.footer_bottom %}
+        {{ page.footer_bottom }}
+      {% else %}
+        <div class="footer-legal-container">
+          <div class="footer-legal-links">
+            <a href="/mentions-legales" class="footer-legal-link">{{ 'Mentions légales'|t }}</a>
+            <a href="/donnees-personnelles" class="footer-legal-link">{{ 'Données personnelles'|t }}</a>
+            <a href="/accessibilite" class="footer-legal-link">{{ 'Accessibilité'|t }}</a>
+            <a href="/plan-site" class="footer-legal-link">{{ 'Plan du site'|t }}</a>
+          </div>
+          
+          <div class="footer-copyright">
+            <p>© {{ "now"|date("Y") }} {{ site_name }} - {{ 'Tous droits réservés'|t }}</p>
+            <p class="compliance-badge">
+              <span class="rgaa-badge">{{ 'Site conforme RGAA'|t }}</span>
+            </p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </footer>
+
+  {{ page_bottom }}
+
+  {# Overlay pour le menu mobile #}
+  <div class="mobile-overlay" aria-hidden="true"></div>
+  
+  {# Bouton retour en haut #}
+  <button id="back-to-top" class="back-to-top" aria-label="{{ 'Retour en haut de la page'|t }}">
+    <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,8L16,12H13V16H11V12H8L12,8Z"/>
+    </svg>
+  </button>
+              {{ 'Site conforme RGAA 4.1 - Niveau AA'|t }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {{ page_bottom }}
+  
+  {# Scripts d'accessibilité #}
+  {{ attach_library('commune_theme/accessibility') }}
+  
+  {# Script pour la navigation au clavier #}
+  <script>
+    // Amélioration de la navigation au clavier
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus visible pour les éléments interactifs
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          document.body.classList.add('keyboard-navigation');
+        }
+      });
+      
+      document.addEventListener('mousedown', function() {
+        document.body.classList.remove('keyboard-navigation');
+      });
+    });
+  </script>
+</body>
+</html>

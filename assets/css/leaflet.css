@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Leaflet CSS - Styles pour les cartes
+   ========================================================================== */
+
+.leaflet-map {
+  min-height: 300px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
+
+/* Styles pour les contrôles de la carte */
+.leaflet-control {
+  font-size: 0.875rem;
+}
+
+.leaflet-control button {
+  border: none;
+  background: #ffffff;
+  color: #374151;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.leaflet-control button:hover,
+.leaflet-control button:focus {
+  background: #f3f4f6;
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .leaflet-map {
+    min-height: 250px;
+  }
+}
+
+/* Accessibilité */
+.leaflet-map[role="img"] {
+  border: 1px solid #d1d5db;
+}
+
+.leaflet-map .placeholder-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+  font-style: italic;
+}
