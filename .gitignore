@@ -1,0 +1,46 @@
+# Dépendances
+node_modules/
+vendor/
+
+# Environnement
+.env
+.env.local
+.env.production
+
+# Base de données
+database/mairie.db
+database/*.db
+
+# Uploads
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Logs
+storage/logs/*.log
+storage/logs/*.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+.docker/
+
+# Backup
+backup/
+*.backup
+*.bak
+
+# Cache
+storage/cache/
+storage/sessions/
+
+# Temp
+tmp/
+temp/
