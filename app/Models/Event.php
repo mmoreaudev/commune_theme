@@ -76,9 +76,13 @@ class Event extends Model
     
     /**
      * Rechercher des événements
+     * Signature compatible avec Model::search($query, $columns = [])
      */
-    public static function search($query)
+    public static function search($query, $columns = [])
     {
-        return parent::search($query, ['title', 'description', 'location']);
+        if (empty($columns)) {
+            $columns = ['title', 'description', 'location'];
+        }
+        return parent::search($query, $columns);
     }
 }

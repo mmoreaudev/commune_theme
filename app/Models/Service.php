@@ -25,9 +25,13 @@ class Service extends Model
     
     /**
      * Rechercher des services
+     * Signature compatible avec Model::search($query, $columns = [])
      */
-    public static function search($query)
+    public static function search($query, $columns = [])
     {
-        return parent::search($query, ['name', 'description', 'responsible']);
+        if (empty($columns)) {
+            $columns = ['name', 'description', 'responsible'];
+        }
+        return parent::search($query, $columns);
     }
 }

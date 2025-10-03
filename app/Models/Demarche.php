@@ -47,9 +47,13 @@ class Demarche extends Model
     
     /**
      * Rechercher dans les démarches
+     * Signature compatible avec Model::search($query, $columns = [])
      */
-    public static function search($query)
+    public static function search($query, $columns = [])
     {
-        return parent::search($query, ['title', 'description', 'procedure']);
+        if (empty($columns)) {
+            $columns = ['title', 'description', 'procedure'];
+        }
+        return parent::search($query, $columns);
     }
 }

@@ -46,9 +46,13 @@ class Faq extends Model
     
     /**
      * Rechercher dans les FAQs
+     * Signature compatible avec Model::search($query, $columns = [])
      */
-    public static function search($query)
+    public static function search($query, $columns = [])
     {
-        return parent::search($query, ['question', 'answer']);
+        if (empty($columns)) {
+            $columns = ['question', 'answer'];
+        }
+        return parent::search($query, $columns);
     }
 }

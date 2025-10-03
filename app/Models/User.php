@@ -100,9 +100,13 @@ class User extends Model
     
     /**
      * Rechercher des utilisateurs
+     * Signature compatible avec Model::search($query, $columns = [])
      */
-    public static function search($query)
+    public static function search($query, $columns = [])
     {
-        return parent::search($query, ['username', 'email', 'full_name']);
+        if (empty($columns)) {
+            $columns = ['username', 'email', 'full_name'];
+        }
+        return parent::search($query, $columns);
     }
 }
