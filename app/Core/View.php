@@ -21,29 +21,34 @@ class View
         
         // Démarrer la capture de sortie
         ob_start();
-        
+
         try {
             // Déterminer le chemin du template
             $templatePath = $this->getTemplatePath($template);
-            
+
             if (!file_exists($templatePath)) {
                 throw new Exception("Template not found: {$template}");
             }
-            
+
             // Inclure le template
             include $templatePath;
-            
-            // Obtenir le contenu
-            $content = ob_get_contents();
-            
+
+            // Récupérer et fermer le buffer de sortie de manière sûre
+            if (ob_get_level() > 0) {
+                $content = ob_get_clean();
+            } else {
+                $content = '';
+            }
+
         } catch (Exception $e) {
-            // Nettoyer le buffer en cas d'erreur
-            ob_end_clean();
+            // Nettoyer le buffer en cas d'erreur (si actif)
+            if (ob_get_level() > 0) {
+                ob_end_clean();
+            }
             throw $e;
         }
-        
-        // Nettoyer et retourner le contenu
-        ob_end_clean();
+
+        // Retourner le contenu
         echo $content;
     }
     
