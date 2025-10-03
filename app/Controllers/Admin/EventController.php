@@ -1,8 +1,10 @@
 <?php
+namespace Admin;
+
 /**
  * Contrôleur Admin Event - Gestion des événements (Admin)
  */
-class EventController extends Controller
+class EventController extends \Controller
 {
     /**
      * Liste des événements

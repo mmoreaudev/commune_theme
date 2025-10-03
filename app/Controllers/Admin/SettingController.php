@@ -1,8 +1,10 @@
 <?php
+namespace Admin;
+
 /**
  * Contrôleur Admin Settings - Gestion des paramètres du site (Admin)
  */
-class SettingController extends Controller
+class SettingController extends \Controller
 {
     /**
      * Affichage des paramètres généraux

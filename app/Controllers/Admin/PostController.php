@@ -1,8 +1,10 @@
 <?php
+namespace Admin;
+
 /**
  * Contrôleur Admin Post - Gestion des articles (Admin)
  */
-class PostController extends Controller
+class PostController extends \Controller
 {
     /**
      * Liste des articles

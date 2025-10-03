@@ -1,8 +1,10 @@
 <?php
+namespace Admin;
+
 /**
  * Contrôleur Admin ContactMessage - Gestion des messages de contact (Admin)
  */
-class ContactMessageController extends Controller
+class ContactMessageController extends \Controller
 {
     /**
      * Liste des messages de contact

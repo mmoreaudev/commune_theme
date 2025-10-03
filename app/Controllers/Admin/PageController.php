@@ -1,8 +1,10 @@
 <?php
+namespace Admin;
+
 /**
  * Contrôleur Admin Page - Gestion des pages (Admin)
  */
-class PageController extends Controller
+class PageController extends \Controller
 {
     /**
      * Liste des pages
