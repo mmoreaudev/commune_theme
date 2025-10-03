@@ -1,8 +1,10 @@
 <?php
+namespace Admin;
+
 /**
  * Contrôleur Auth Admin - Authentification
  */
-class AuthController extends Controller
+class AuthController extends \Controller
 {
     /**
      * Afficher la page de connexion

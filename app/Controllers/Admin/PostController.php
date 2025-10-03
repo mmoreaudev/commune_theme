@@ -12,7 +12,7 @@ class PostController extends \Controller
     public function index()
     {
         $page = (int) ($_GET['page'] ?? 1);
-        $posts = Post::paginate($page, 10, [], 'created_at', 'DESC');
+        $posts = \\Post::paginate($page, 10, [], 'created_at', 'DESC');
         
         return $this->view('admin.pages.posts.index', [
             'title' => 'Gestion des articles',
@@ -40,7 +40,7 @@ class PostController extends \Controller
             $data['author_id'] = auth()['id'] ?? 1;
             $data['status'] = $data['status'] ?? 'draft';
             
-            $post = Post::createPost($data);
+            $post = \Post::createPost($data);
             
             return $this->redirect('/admin/posts', 'Article créé avec succès !', 'success');
             
@@ -60,7 +60,7 @@ class PostController extends \Controller
             return $this->redirect('/admin/posts', 'Article introuvable', 'error');
         }
         
-        $post = Post::find($id);
+        $post = \Post::find($id);
         
         if (!$post) {
             return $this->redirect('/admin/posts', 'Article introuvable', 'error');
@@ -85,7 +85,7 @@ class PostController extends \Controller
         
         try {
             $data = $this->request()->all();
-            Post::updatePost($id, $data);
+            \Post::updatePost($id, $data);
             
             return $this->redirect('/admin/posts', 'Article mis à jour avec succès !', 'success');
             
@@ -106,7 +106,7 @@ class PostController extends \Controller
         }
         
         try {
-            Post::delete($id);
+            \Post::delete($id);
             return $this->redirect('/admin/posts', 'Article supprimé avec succès !', 'success');
             
         } catch (Exception $e) {

@@ -11,7 +11,7 @@ class SettingController extends \Controller
      */
     public function index()
     {
-        $settings = Setting::all();
+        $settings = \\Setting::all();
         $settingsData = [];
         
         // Organiser les paramètres par catégorie
@@ -44,7 +44,7 @@ class SettingController extends \Controller
                 if ($key === '_token') continue;
                 
                 // Vérifier si le paramètre existe
-                $setting = Setting::findByKey($key);
+                $setting = \Setting::findByKey($key);
                 
                 if ($setting) {
                     // Traitement spécial pour les fichiers (logo, etc.)
@@ -52,10 +52,10 @@ class SettingController extends \Controller
                         $value = $this->handleFileUpload($_FILES[$key], $key);
                     }
                     
-                    Setting::updateValue($key, $value);
+                    \Setting::updateValue($key, $value);
                 } else {
                     // Créer un nouveau paramètre
-                    Setting::create([
+                    \Setting::create([
                         'key' => $key,
                         'value' => $value,
                         'category' => 'general',
@@ -76,8 +76,8 @@ class SettingController extends \Controller
      */
     public function widgets()
     {
-        $widgets = Widget::all();
-        $activeWidgets = Widget::where('is_active', '1');
+        $widgets = \Widget::all();
+        $activeWidgets = \Widget::where('is_active', '1');
         
         return $this->view('admin.pages.settings.widgets', [
             'title' => 'Gestion des widgets',
@@ -102,14 +102,14 @@ class SettingController extends \Controller
         }
         
         try {
-            $widget = Widget::find($id);
+            $widget = \Widget::find($id);
             
             if (!$widget) {
                 return $this->redirect('/admin/settings/widgets', 'Widget introuvable', 'error');
             }
             
             $newStatus = $widget['is_active'] ? 0 : 1;
-            Widget::update($id, ['is_active' => $newStatus]);
+            \Widget::update($id, ['is_active' => $newStatus]);
             
             $message = $newStatus ? 'Widget activé' : 'Widget désactivé';
             return $this->redirect('/admin/settings/widgets', $message, 'success');

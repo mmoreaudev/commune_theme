@@ -12,7 +12,7 @@ class PageController extends \Controller
     public function index()
     {
         $page = (int) ($_GET['page'] ?? 1);
-        $pages = Page::paginate($page, 10, [], 'created_at', 'DESC');
+        $pages = \\Page::paginate($page, 10, [], 'created_at', 'DESC');
         
         return $this->view('admin.pages.pages.index', [
             'title' => 'Gestion des pages',
@@ -41,10 +41,10 @@ class PageController extends \Controller
             
             // Générer le slug
             if (empty($data['slug']) && !empty($data['title'])) {
-                $data['slug'] = Page::generateSlug($data['title']);
+                $data['slug'] = \Page::generateSlug($data['title']);
             }
             
-            $page = Page::create($data);
+            $page = \Page::create($data);
             
             return $this->redirect('/admin/pages', 'Page créée avec succès !', 'success');
             
@@ -64,7 +64,7 @@ class PageController extends \Controller
             return $this->redirect('/admin/pages', 'Page introuvable', 'error');
         }
         
-        $page = Page::find($id);
+        $page = \Page::find($id);
         
         if (!$page) {
             return $this->redirect('/admin/pages', 'Page introuvable', 'error');
@@ -91,12 +91,12 @@ class PageController extends \Controller
             $data = $this->request()->all();
             
             // Régénérer le slug si le titre a changé
-            $current = Page::find($id);
+            $current = \Page::find($id);
             if ($current && $current['title'] !== $data['title']) {
-                $data['slug'] = Page::generateSlug($data['title'], $id);
+                $data['slug'] = \Page::generateSlug($data['title'], $id);
             }
             
-            Page::update($id, $data);
+            \Page::update($id, $data);
             
             return $this->redirect('/admin/pages', 'Page mise à jour avec succès !', 'success');
             
@@ -117,7 +117,7 @@ class PageController extends \Controller
         }
         
         try {
-            Page::delete($id);
+            \Page::delete($id);
             return $this->redirect('/admin/pages', 'Page supprimée avec succès !', 'success');
             
         } catch (Exception $e) {

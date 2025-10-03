@@ -12,7 +12,7 @@ class EventController extends \Controller
     public function index()
     {
         $page = (int) ($_GET['page'] ?? 1);
-        $events = Event::paginate($page, 10, [], 'start_date', 'DESC');
+        $events = \\Event::paginate($page, 10, [], 'start_date', 'DESC');
         
         return $this->view('admin.pages.events.index', [
             'title' => 'Gestion des événements',
@@ -39,7 +39,7 @@ class EventController extends \Controller
             $data = $this->request()->all();
             $data['status'] = $data['status'] ?? 'published';
             
-            $event = Event::createEvent($data);
+            $event = \Event::createEvent($data);
             
             return $this->redirect('/admin/events', 'Événement créé avec succès !', 'success');
             
@@ -59,7 +59,7 @@ class EventController extends \Controller
             return $this->redirect('/admin/events', 'Événement introuvable', 'error');
         }
         
-        $event = Event::find($id);
+        $event = \Event::find($id);
         
         if (!$event) {
             return $this->redirect('/admin/events', 'Événement introuvable', 'error');
@@ -84,7 +84,7 @@ class EventController extends \Controller
         
         try {
             $data = $this->request()->all();
-            Event::update($id, $data);
+            \Event::update($id, $data);
             
             return $this->redirect('/admin/events', 'Événement mis à jour avec succès !', 'success');
             
@@ -105,7 +105,7 @@ class EventController extends \Controller
         }
         
         try {
-            Event::delete($id);
+            \Event::delete($id);
             return $this->redirect('/admin/events', 'Événement supprimé avec succès !', 'success');
             
         } catch (Exception $e) {

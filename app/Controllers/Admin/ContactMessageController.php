@@ -19,7 +19,7 @@ class ContactMessageController extends \Controller
             $conditions['status'] = $status;
         }
         
-        $messages = ContactMessage::paginate($page, 15, $conditions, 'created_at', 'DESC');
+        $messages = \\ContactMessage::paginate($page, 15, $conditions, 'created_at', 'DESC');
         
         return $this->view('admin.pages.contact-messages.index', [
             'title' => 'Messages de contact',
@@ -39,7 +39,7 @@ class ContactMessageController extends \Controller
             return $this->redirect('/admin/contact-messages', 'Message introuvable', 'error');
         }
         
-        $message = ContactMessage::find($id);
+        $message = \ContactMessage::find($id);
         
         if (!$message) {
             return $this->redirect('/admin/contact-messages', 'Message introuvable', 'error');
@@ -47,7 +47,7 @@ class ContactMessageController extends \Controller
         
         // Marquer comme lu si nouveau
         if ($message['status'] === 'new') {
-            ContactMessage::update($id, ['status' => 'read']);
+            \ContactMessage::update($id, ['status' => 'read']);
         }
         
         return $this->view('admin.pages.contact-messages.show', [
@@ -68,7 +68,7 @@ class ContactMessageController extends \Controller
         }
         
         try {
-            ContactMessage::update($id, ['status' => 'read']);
+            \ContactMessage::update($id, ['status' => 'read']);
             return $this->redirect('/admin/contact-messages', 'Message marqué comme lu', 'success');
             
         } catch (Exception $e) {
@@ -88,7 +88,7 @@ class ContactMessageController extends \Controller
         }
         
         try {
-            ContactMessage::update($id, ['status' => 'replied']);
+            \ContactMessage::update($id, ['status' => 'replied']);
             return $this->redirect('/admin/contact-messages', 'Message marqué comme traité', 'success');
             
         } catch (Exception $e) {
@@ -108,7 +108,7 @@ class ContactMessageController extends \Controller
         }
         
         try {
-            ContactMessage::update($id, ['status' => 'archived']);
+            \ContactMessage::update($id, ['status' => 'archived']);
             return $this->redirect('/admin/contact-messages', 'Message archivé', 'success');
             
         } catch (Exception $e) {

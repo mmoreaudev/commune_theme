@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="80" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  
+  <!-- Building -->
+  <rect x="30" y="40" width="60" height="30" fill="#3b82f6"/>
+  <rect x="35" y="50" width="10" height="15" fill="#1e40af"/>
+  <rect x="50" y="50" width="10" height="15" fill="#1e40af"/>
+  <rect x="65" y="50" width="10" height="15" fill="#1e40af"/>
+  <rect x="80" y="50" width="10" height="15" fill="#1e40af"/>
+  
+  <!-- Roof -->
+  <polygon points="25,40 60,25 95,40" fill="#dc2626"/>
+  
+  <!-- Flag -->
+  <rect x="56" y="15" width="8" height="20" fill="#374151"/>
+  <rect x="64" y="15" width="20" height="10" fill="#ef4444"/>
+  
+  <!-- Text -->
+  <text x="60" y="10" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#374151" font-weight="bold">MAIRIE</text>
+</svg>
