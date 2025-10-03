@@ -1,8 +1,0 @@
-name: commune_theme
-type: theme
-description: 'Thème moderne et accessible pour la commune de Morton (86), basé sur TailwindCSS et Flowbite.'
-core_version_requirement: ^11
-regions:
-  header: 'Header'
-  content: 'Content'
-  footer: 'Footer'
