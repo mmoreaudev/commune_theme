@@ -151,13 +151,17 @@ add_action('widgets_init', 'mairie_widgets_init');
  * Chargement des styles et scripts
  */
 function mairie_enqueue_scripts() {
-    // Styles
-    wp_enqueue_style('mairie-main', MAIRIE_THEME_URI . '/assets/css/main.css', array(), MAIRIE_THEME_VERSION);
-    wp_enqueue_style('mairie-responsive', MAIRIE_THEME_URI . '/assets/css/responsive.css', array('mairie-main'), MAIRIE_THEME_VERSION);
-    wp_enqueue_style('mairie-accessibility', MAIRIE_THEME_URI . '/assets/css/accessibility.css', array('mairie-main'), MAIRIE_THEME_VERSION);
+    // Tailwind CSS via CDN
+    wp_enqueue_style('tailwind-cdn', 'https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css', array(), '3.4.1');
+    
+    // Font Awesome pour les icônes
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1');
+    
+    // Style personnalisé minimal (pour RGAA et surcharges spécifiques)
+    wp_enqueue_style('mairie-custom', MAIRIE_THEME_URI . '/assets/css/custom.css', array('tailwind-cdn'), MAIRIE_THEME_VERSION);
     
     // Scripts
-    wp_enqueue_script('mairie-navigation', MAIRIE_THEME_URI . '/assets/js/navigation.js', array(), MAIRIE_THEME_VERSION, true);
+    wp_enqueue_script('mairie-navigation', MAIRIE_THEME_URI . '/assets/js/navigation.js', array('jquery'), MAIRIE_THEME_VERSION, true);
     wp_enqueue_script('mairie-main', MAIRIE_THEME_URI . '/assets/js/main.js', array('jquery'), MAIRIE_THEME_VERSION, true);
     
     // Localisation pour AJAX
@@ -196,6 +200,7 @@ add_action('admin_enqueue_scripts', 'mairie_admin_enqueue_scripts');
 /**
  * Chargement des modules du thème
  */
+require_once MAIRIE_THEME_DIR . '/inc/menu-walker.php';
 require_once MAIRIE_THEME_DIR . '/inc/custom-post-types.php';
 require_once MAIRIE_THEME_DIR . '/inc/custom-fields.php';
 require_once MAIRIE_THEME_DIR . '/inc/widgets.php';
