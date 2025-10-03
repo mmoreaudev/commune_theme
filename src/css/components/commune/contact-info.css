@@ -1,0 +1,275 @@
+/**
+ * Composant Informations Contact - Thème Commune
+ * Interface pour présenter les informations de contact de la mairie
+ */
+
+.commune-contact {
+  @apply space-y-8;
+  
+  &__header {
+    @apply text-center mb-8;
+  }
+  
+  &__title {
+    @apply text-2xl font-bold text-gray-900 mb-4;
+  }
+  
+  &__subtitle {
+    @apply text-gray-600;
+  }
+  
+  &__grid {
+    @apply grid gap-8 md:grid-cols-2 lg:grid-cols-3;
+  }
+}
+
+/* Carte d'information */
+.contact-card {
+  @apply bg-white rounded-lg p-6 border border-gray-200;
+  @apply hover:border-primary-300 hover:shadow-md transition-all duration-300;
+  
+  &__header {
+    @apply flex items-center mb-4;
+  }
+  
+  &__icon {
+    @apply w-8 h-8 text-primary-600 mr-3;
+  }
+  
+  &__title {
+    @apply text-lg font-bold text-gray-900;
+  }
+  
+  &__content {
+    @apply space-y-3;
+  }
+  
+  &__item {
+    @apply flex items-start gap-3;
+  }
+  
+  &__item-icon {
+    @apply w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0;
+  }
+  
+  &__item-content {
+    @apply text-gray-700;
+  }
+  
+  &__link {
+    @apply text-primary-600 hover:text-primary-700 no-underline;
+  }
+  
+  /* Types de contact */
+  &--address {
+    .contact-card__icon {
+      @apply text-blue-600;
+    }
+  }
+  
+  &--phone {
+    .contact-card__icon {
+      @apply text-green-600;
+    }
+  }
+  
+  &--email {
+    .contact-card__icon {
+      @apply text-purple-600;
+    }
+  }
+  
+  &--hours {
+    .contact-card__icon {
+      @apply text-orange-600;
+    }
+  }
+}
+
+/* Horaires d'ouverture */
+.opening-hours {
+  &__list {
+    @apply space-y-2;
+  }
+  
+  &__item {
+    @apply flex justify-between items-center py-2 border-b border-gray-100;
+    
+    &:last-child {
+      @apply border-b-0;
+    }
+  }
+  
+  &__day {
+    @apply font-medium text-gray-900;
+    
+    &--today {
+      @apply text-primary-600 font-bold;
+    }
+    
+    &--closed {
+      @apply text-gray-500;
+    }
+  }
+  
+  &__time {
+    @apply text-gray-600;
+    
+    &--closed {
+      @apply text-gray-400 italic;
+    }
+    
+    &--open {
+      @apply text-green-600 font-medium;
+    }
+  }
+  
+  &__status {
+    @apply inline-block px-2 py-1 rounded-full text-xs font-semibold;
+    
+    &--open {
+      @apply bg-green-100 text-green-800;
+    }
+    
+    &--closed {
+      @apply bg-red-100 text-red-800;
+    }
+    
+    &--soon {
+      @apply bg-yellow-100 text-yellow-800;
+    }
+  }
+}
+
+/* Informations municipales */
+.municipal-info {
+  @apply bg-primary-50 rounded-lg p-6;
+  
+  &__header {
+    @apply text-center mb-6;
+  }
+  
+  &__title {
+    @apply text-xl font-bold text-primary-900 mb-2;
+  }
+  
+  &__subtitle {
+    @apply text-primary-700;
+  }
+  
+  &__content {
+    @apply space-y-4;
+  }
+  
+  &__item {
+    @apply bg-white rounded p-4 flex items-center;
+  }
+  
+  &__icon {
+    @apply w-6 h-6 text-primary-600 mr-3;
+  }
+  
+  &__label {
+    @apply font-semibold text-gray-900 mr-2;
+  }
+  
+  &__value {
+    @apply text-gray-700;
+  }
+}
+
+/* Personnel municipal */
+.municipal-staff {
+  &__grid {
+    @apply grid gap-6 sm:grid-cols-2 lg:grid-cols-3;
+  }
+  
+  &__card {
+    @apply bg-white rounded-lg p-6 border border-gray-200 text-center;
+    @apply hover:border-primary-300 hover:shadow-md transition-all duration-300;
+  }
+  
+  &__avatar {
+    @apply w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden;
+    
+    img {
+      @apply w-full h-full object-cover;
+    }
+  }
+  
+  &__name {
+    @apply text-lg font-bold text-gray-900 mb-1;
+  }
+  
+  &__role {
+    @apply text-primary-600 font-medium mb-3;
+  }
+  
+  &__contact {
+    @apply space-y-2 text-sm;
+  }
+  
+  &__contact-item {
+    @apply flex items-center justify-center text-gray-600;
+  }
+  
+  &__contact-icon {
+    @apply w-4 h-4 mr-2;
+  }
+}
+
+/* Services d'urgence */
+.emergency-contacts {
+  @apply bg-red-50 border border-red-200 rounded-lg p-6;
+  
+  &__header {
+    @apply flex items-center mb-4;
+  }
+  
+  &__icon {
+    @apply w-6 h-6 text-red-600 mr-2;
+  }
+  
+  &__title {
+    @apply text-lg font-bold text-red-900;
+  }
+  
+  &__warning {
+    @apply text-sm text-red-700 mb-4;
+  }
+  
+  &__list {
+    @apply space-y-3;
+  }
+  
+  &__item {
+    @apply bg-white rounded p-3 flex items-center justify-between;
+  }
+  
+  &__service {
+    @apply font-semibold text-gray-900;
+  }
+  
+  &__number {
+    @apply text-red-600 font-bold text-lg;
+  }
+  
+  &__link {
+    @apply no-underline color-inherit;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .commune-contact__grid {
+    @apply grid-cols-1;
+  }
+  
+  .municipal-staff__grid {
+    @apply grid-cols-1 sm:grid-cols-2;
+  }
+  
+  .contact-card {
+    @apply p-4;
+  }
+}

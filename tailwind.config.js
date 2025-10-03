@@ -2,14 +2,14 @@
 module.exports = {
   content: [
     "./templates/**/*.{html,twig}",
-    "./assets/js/**/*.js",
     "./src/**/*.{css,js}",
-    "../commune_setup/templates/**/*.twig"
+    "./assets/**/*.{css,js}"
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Couleurs de la commune - Respectant les contrastes RGAA
+        // Couleurs principales de la commune - RGAA compliant
         commune: {
           primary: {
             50: '#eff6ff',
@@ -20,8 +20,8 @@ module.exports = {
             500: '#3b82f6',
             600: '#2563eb',
             700: '#1d4ed8',
-            800: '#1e40af', // Principal
-            900: '#1e3a8a'  // Sombre
+            800: '#1e40af', // Bleu institutionnel
+            900: '#1e3a8a'
           },
           secondary: {
             50: '#ecfdf5',
@@ -30,7 +30,7 @@ module.exports = {
             300: '#6ee7b7',
             400: '#34d399',
             500: '#10b981',
-            600: '#059669', // Vert nature
+            600: '#059669', // Vert environnement
             700: '#047857',
             800: '#065f46',
             900: '#064e3b'
@@ -42,12 +42,264 @@ module.exports = {
             300: '#fca5a5',
             400: '#f87171',
             500: '#ef4444',
-            600: '#dc2626', // Rouge urgent
+            600: '#dc2626', // Rouge urgence/alerte
             700: '#b91c1c',
             800: '#991b1b',
             900: '#7f1d1d'
           },
-          gray: {
+          warning: {
+            50: '#fffbeb',
+            100: '#fef3c7',
+            200: '#fde68a',
+            300: '#fcd34d',
+            400: '#fbbf24',
+            500: '#f59e0b',
+            600: '#d97706',
+            700: '#b45309',
+            800: '#92400e',
+            900: '#78350f'
+          },
+          success: {
+            50: '#f0fdf4',
+            100: '#dcfce7',
+            200: '#bbf7d0',
+            300: '#86efac',
+            400: '#4ade80',
+            500: '#22c55e',
+            600: '#16a34a',
+            700: '#15803d',
+            800: '#166534',
+            900: '#14532d'
+          },
+          // Palette gouvernementale française
+          marianne: {
+            blue: '#000091',
+            red: '#e1000f',
+            silver: '#ddd'
+          }
+        }
+      },
+      fontFamily: {
+        'sans': ['Marianne', 'system-ui', 'sans-serif'],
+        'serif': ['Spectral', 'Georgia', 'serif'],
+        'mono': ['JetBrains Mono', 'Monaco', 'monospace']
+      },
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1rem' }],
+        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+        'base': ['1rem', { lineHeight: '1.5rem' }],
+        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1' }],
+        '6xl': ['3.75rem', { lineHeight: '1' }],
+        '7xl': ['4.5rem', { lineHeight: '1' }],
+        '8xl': ['6rem', { lineHeight: '1' }],
+        '9xl': ['8rem', { lineHeight: '1' }]
+      },
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px'
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem'
+      },
+      maxWidth: {
+        'xs': '20rem',
+        'sm': '24rem',
+        'md': '28rem',
+        'lg': '32rem',
+        'xl': '36rem',
+        '2xl': '42rem',
+        '3xl': '48rem',
+        '4xl': '56rem',
+        '5xl': '64rem',
+        '6xl': '72rem',
+        '7xl': '80rem',
+        'prose': '65ch'
+      },
+      boxShadow: {
+        'card': '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+        'card-hover': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+        'modal': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        'header': '0 1px 2px 0 rgb(0 0 0 / 0.05)'
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'slide-down': 'slideDown 0.3s ease-out',
+        'scale-in': 'scaleIn 0.2s ease-out',
+        'pulse-soft': 'pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(-10px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' }
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' }
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' }
+        }
+      },
+      zIndex: {
+        'dropdown': '1000',
+        'sticky': '1010',
+        'fixed': '1020',
+        'modal-backdrop': '1030',
+        'modal': '1040',
+        'popover': '1050',
+        'tooltip': '1060'
+      },
+      // Grille spécialisée pour les cartes
+      gridTemplateColumns: {
+        'auto-fit-300': 'repeat(auto-fit, minmax(300px, 1fr))',
+        'auto-fit-280': 'repeat(auto-fit, minmax(280px, 1fr))',
+        'auto-fit-250': 'repeat(auto-fit, minmax(250px, 1fr))'
+      },
+      // Aspects ratios pour les médias
+      aspectRatio: {
+        'video': '16 / 9',
+        'card': '4 / 3',
+        'portrait': '3 / 4'
+      }
+    }
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/container-queries'),
+    
+    // Plugin personnalisé pour les composants commune
+    function({ addComponents, theme }) {
+      addComponents({
+        // Classes utilitaires pour l'accessibilité
+        '.sr-only': {
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: '0',
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0, 0, 0, 0)',
+          whiteSpace: 'nowrap',
+          border: '0'
+        },
+        '.not-sr-only': {
+          position: 'static',
+          width: 'auto',
+          height: 'auto',
+          padding: '0',
+          margin: '0',
+          overflow: 'visible',
+          clip: 'auto',
+          whiteSpace: 'normal'
+        },
+        
+        // Focus visible amélioré
+        '.focus-visible:focus': {
+          outline: `2px solid ${theme('colors.commune.primary.600')}`,
+          outlineOffset: '2px'
+        },
+        
+        // Conteneur principal
+        '.container-commune': {
+          width: '100%',
+          maxWidth: '1280px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          paddingLeft: theme('spacing.4'),
+          paddingRight: theme('spacing.4'),
+          '@screen sm': {
+            paddingLeft: theme('spacing.6'),
+            paddingRight: theme('spacing.6')
+          },
+          '@screen lg': {
+            paddingLeft: theme('spacing.8'),
+            paddingRight: theme('spacing.8')
+          }
+        },
+        
+        // Boutons standardisés
+        '.btn': {
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingTop: theme('spacing.2'),
+          paddingBottom: theme('spacing.2'),
+          paddingLeft: theme('spacing.4'),
+          paddingRight: theme('spacing.4'),
+          fontSize: theme('fontSize.sm'),
+          fontWeight: theme('fontWeight.semibold'),
+          borderRadius: theme('borderRadius.md'),
+          border: '1px solid transparent',
+          textDecoration: 'none',
+          cursor: 'pointer',
+          transition: 'all 0.15s ease-in-out',
+          
+          '&:focus': {
+            outline: `2px solid ${theme('colors.commune.primary.600')}`,
+            outlineOffset: '2px'
+          },
+          
+          '&:disabled': {
+            opacity: '0.5',
+            cursor: 'not-allowed'
+          }
+        },
+        
+        '.btn-primary': {
+          backgroundColor: theme('colors.commune.primary.600'),
+          color: theme('colors.white'),
+          
+          '&:hover': {
+            backgroundColor: theme('colors.commune.primary.700')
+          }
+        },
+        
+        '.btn-secondary': {
+          backgroundColor: theme('colors.commune.secondary.600'),
+          color: theme('colors.white'),
+          
+          '&:hover': {
+            backgroundColor: theme('colors.commune.secondary.700')
+          }
+        },
+        
+        '.btn-outline': {
+          backgroundColor: 'transparent',
+          color: theme('colors.commune.primary.600'),
+          borderColor: theme('colors.commune.primary.600'),
+          
+          '&:hover': {
+            backgroundColor: theme('colors.commune.primary.600'),
+            color: theme('colors.white')
+          }
+        }
+      })
+    }
+  ]
+}
             50: '#f9fafb',
             100: '#f3f4f6',
             200: '#e5e7eb',

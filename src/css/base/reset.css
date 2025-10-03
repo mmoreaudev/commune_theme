@@ -1,0 +1,92 @@
+/**
+ * Reset & Base Styles
+ * Styles de base cohérents pour tous les éléments
+ */
+
+/* Reset personnalisé pour commune */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: theme('colors.gray.900');
+  background-color: theme('colors.white');
+  overflow-x: hidden;
+}
+
+/* Amélioration de l'accessibilité */
+body:not(.user-is-tabbing) *:focus {
+  outline: none !important;
+}
+
+/* Focus visible pour navigation clavier */
+.user-is-tabbing *:focus {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+}
+
+/* Réduction du mouvement pour utilisateurs sensibles */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Media responsifs par défaut */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Amélioration des inputs */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Éviter les débordements de texte */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Container root pour isolation */
+#root,
+#__next {
+  isolation: isolate;
+}

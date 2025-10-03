@@ -1,0 +1,187 @@
+/**
+ * Feuille de style principale - Thème Commune Moderne
+ * Système de design pour sites de communes françaises
+ * Compatible Drupal 11 - RGAA - Modern CSS
+ */
+
+/* ==========================================================================
+   IMPORTS & FOUNDATIONS
+   ========================================================================== */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Base styles */
+@import 'base/reset.css';
+@import 'base/typography.css';
+@import 'base/forms.css';
+@import 'base/accessibility.css';
+
+/* Layout components */
+@import 'layouts/header.css';
+@import 'layouts/navigation.css';
+@import 'layouts/footer.css';
+@import 'layouts/grid.css';
+
+/* UI Components */
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/alerts.css';
+@import 'components/modals.css';
+@import 'components/breadcrumbs.css';
+@import 'components/hero.css';
+@import 'components/carousel.css';
+@import 'components/tables.css';
+@import 'components/tabs.css';
+@import 'components/accordion.css';
+
+/* Specific commune components */
+@import 'components/commune/services-grid.css';
+@import 'components/commune/news-events.css';
+@import 'components/commune/contact-info.css';
+@import 'components/commune/opening-hours.css';
+@import 'components/commune/documents.css';
+@import 'components/commune/heritage.css';
+@import 'components/commune/tourism.css';
+@import 'components/commune/businesses.css';
+@import 'components/commune/emergency.css';
+
+/* ==========================================================================
+   CUSTOM PROPERTIES (CSS Variables)
+   ========================================================================== */
+
+:root {
+  /* Couleurs principales de la commune */
+  --color-primary: theme('colors.commune.primary.700');
+  --color-primary-light: theme('colors.commune.primary.100');
+  --color-primary-dark: theme('colors.commune.primary.900');
+  
+  --color-secondary: theme('colors.commune.secondary.600');
+  --color-secondary-light: theme('colors.commune.secondary.100');
+  
+  --color-accent: theme('colors.commune.accent.600');
+  --color-success: theme('colors.green.600');
+  --color-warning: theme('colors.amber.600');
+  --color-error: theme('colors.red.600');
+  --color-info: theme('colors.blue.600');
+  
+  /* Grille et espaces */
+  --container-max-width: 1280px;
+  --container-padding: theme('spacing.4');
+  --section-spacing: theme('spacing.16');
+  --component-spacing: theme('spacing.8');
+  
+  /* Typographie */
+  --font-family-primary: 'Marianne', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-family-secondary: 'Spectral', Georgia, 'Times New Roman', serif;
+  
+  /* Rayons de bordure */
+  --radius-sm: theme('borderRadius.sm');
+  --radius-md: theme('borderRadius.md');
+  --radius-lg: theme('borderRadius.lg');
+  
+  /* Ombres */
+  --shadow-sm: theme('boxShadow.sm');
+  --shadow-md: theme('boxShadow.md');
+  --shadow-lg: theme('boxShadow.lg');
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+  
+  /* Z-index system */
+  --z-dropdown: 1000;
+  --z-sticky: 1010;
+  --z-fixed: 1020;
+  --z-modal-backdrop: 1030;
+  --z-modal: 1040;
+  --z-popover: 1050;
+  --z-tooltip: 1060;
+}
+
+/* ==========================================================================
+   UTILITIES & HELPERS
+   ========================================================================== */
+
+/* Container principal */
+.container {
+  @apply mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: var(--container-max-width);
+}
+
+/* Système de grille responsive */
+.commune-grid {
+  @apply grid gap-6;
+  
+  &--2cols { @apply md:grid-cols-2; }
+  &--3cols { @apply md:grid-cols-2 lg:grid-cols-3; }
+  &--4cols { @apply sm:grid-cols-2 lg:grid-cols-4; }
+  &--auto { @apply grid-cols-[repeat(auto-fit,minmax(280px,1fr))]; }
+}
+
+/* Sections avec espacement cohérent */
+.commune-section {
+  @apply py-12 md:py-16 lg:py-20;
+  
+  &--compact { @apply py-8 md:py-12; }
+  &--hero { @apply py-16 md:py-24 lg:py-32; }
+}
+
+/* Utilities pour l'accessibilité */
+.sr-only {
+  @apply absolute w-px h-px p-0 -m-px overflow-hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+}
+
+/* Skip links pour l'accessibilité */
+.skip-link {
+  @apply absolute -top-full left-4 z-50 bg-primary-900 text-white px-4 py-2 rounded-md;
+  @apply focus:top-4 transition-all duration-300;
+}
+
+/* État de chargement */
+.loading {
+  @apply relative overflow-hidden;
+  
+  &::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent;
+    animation: loading 1.5s infinite;
+  }
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  * {
+    @apply text-black bg-white;
+  }
+  
+  .no-print {
+    @apply hidden;
+  }
+  
+  .page-break {
+    page-break-after: always;
+  }
+  
+  a[href]:after {
+    content: ' (' attr(href) ')';
+    @apply text-sm text-gray-600;
+  }
+}

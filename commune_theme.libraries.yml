@@ -1,26 +1,53 @@
-global-css:
+# Librairie principale
+main:
   version: VERSION
   css:
     base:
-      assets/css/normalize.css: {}
-    layout:
-      assets/css/layout.css: {}
-    component:
-      assets/css/components.css: {}
-    theme:
-      assets/css/global.css: {}
-      assets/css/print.css: { media: print }
-  dependencies:
-    - core/jquery
-
-global-js:
-  version: VERSION
+      assets/css/main.css: { weight: -10 }
   js:
-    assets/js/main.js: {}
+    assets/js/main.js: { weight: -5 }
   dependencies:
-    - core/jquery
     - core/drupal
     - core/drupalSettings
+
+# Composants CSS
+components:
+  version: VERSION
+  js:
+    assets/js/components.js: {}
+  dependencies:
+    - commune_theme/main
+
+# Interface d'administration
+admin:
+  version: VERSION
+  css:
+    theme:
+      assets/css/admin.css: {}
+  js:
+    assets/js/admin.js: {}
+  dependencies:
+    - commune_theme/main
+
+# Zone héro
+hero:
+  version: VERSION
+  css:
+    component:
+      assets/css/components/hero.css: {}
+  js:
+    assets/js/components/hero.js: {}
+  dependencies:
+    - commune_theme/main
+
+# Sidebar et widgets
+sidebar:
+  version: VERSION
+  css:
+    component:
+      assets/css/components/sidebar.css: {}
+  dependencies:
+    - commune_theme/main
 
 swiper:
   version: VERSION
