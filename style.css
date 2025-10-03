@@ -1,0 +1,29 @@
+/*
+Theme Name: Mairie France
+Theme URI: https://github.com/mmoreaudev/commune_theme
+Author: mmoreaudev
+Author URI: https://github.com/mmoreaudev
+Description: Thème WordPress professionnel pour sites de communes et mairies françaises. Conforme RGAA, responsive et optimisé pour les besoins des collectivités locales.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.4
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: mairie-france
+Tags: government, accessibility-ready, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, sticky-post, theme-options, threaded-comments, translation-ready
+*/
+
+/**
+ * Table des matières
+ * 
+ * 1. Reset & Base
+ * 2. Typographie
+ * 3. Layouts
+ * 4. Navigation
+ * 5. Composants
+ * 6. Utilitaires
+ * 7. Accessibilité
+ */
+
+/* Ce fichier est le header du thème. Les styles principaux sont dans assets/css/ */

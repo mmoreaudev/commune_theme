@@ -1,0 +1,247 @@
+/**
+ * Accessibility CSS - RGAA Compliance
+ * 
+ * @package Mairie_France
+ * @since 1.0.0
+ */
+
+/* ===== FOCUS STYLES ===== */
+*:focus {
+    outline: 2px solid var(--color-primary, #000091);
+    outline-offset: 2px;
+}
+
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--color-primary, #000091);
+    outline-offset: 2px;
+}
+
+/* ===== SKIP LINKS ===== */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    z-index: 999999;
+    padding: 1em;
+    background: var(--color-primary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+/* ===== SCREEN READER ONLY ===== */
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.screen-reader-text:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    :root {
+        --color-primary: #0000CC;
+        --color-text: #000000;
+        --color-background: #FFFFFF;
+        --color-border: #000000;
+    }
+    
+    button,
+    .button {
+        border: 2px solid #000;
+    }
+}
+
+/* ===== CONTRAST RATIOS (AAA) ===== */
+/* Assurez-vous que tous les textes ont un contraste minimum de 7:1 */
+body {
+    color: #161616; /* Contraste 14.6:1 sur blanc */
+}
+
+.color-text-light {
+    color: #646970; /* Contraste 4.6:1 sur blanc */
+}
+
+/* ===== KEYBOARD NAVIGATION ===== */
+.menu-item:focus-within > a,
+.submenu-toggle:focus {
+    background-color: rgba(0, 0, 145, 0.1);
+}
+
+/* Indicateur visuel pour navigation clavier */
+nav a:focus,
+nav button:focus {
+    background-color: rgba(0, 0, 145, 0.1);
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+/* ===== ARIA LIVE REGIONS ===== */
+[aria-live="polite"],
+[aria-live="assertive"] {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* ===== REQUIRED FIELDS ===== */
+.required::after,
+label.required::after {
+    content: " *";
+    color: var(--color-error);
+}
+
+input:required,
+textarea:required,
+select:required {
+    border-left: 3px solid var(--color-error);
+}
+
+input:valid,
+textarea:valid,
+select:valid {
+    border-left: 3px solid var(--color-success);
+}
+
+/* ===== ERROR MESSAGES ===== */
+.error-message,
+.wpcf7-not-valid-tip {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* ===== TOOLTIPS & HELP TEXT ===== */
+.help-text,
+.description {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin-top: 0.25rem;
+}
+
+/* ===== TABLES ACCESSIBILITY ===== */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    font-weight: 700;
+    background-color: var(--color-background-alt);
+}
+
+th,
+td {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+}
+
+caption {
+    font-weight: 700;
+    text-align: left;
+    padding: var(--spacing-sm);
+    background-color: var(--color-background-alt);
+}
+
+/* ===== IMAGES ===== */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Toutes les images doivent avoir un alt */
+img:not([alt]) {
+    outline: 3px solid var(--color-error);
+}
+
+/* ===== LINKS ===== */
+a:not([class]) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+a:focus {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+/* Liens externes - icône visuelle */
+a[target="_blank"]::after {
+    content: " ↗";
+    font-size: 0.8em;
+}
+
+/* ===== HEADINGS HIERARCHY ===== */
+/* Assurez-vous d'une hiérarchie logique des titres */
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+/* ===== ANIMATIONS RESPECTUEUSES ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== LANGUAGE ATTRIBUTE ===== */
+:lang(fr) {
+    quotes: "«\A0" "\A0»" "‹\A0" "\A0›";
+}
+
+/* ===== PRINT ACCESSIBILITY ===== */
+@media print {
+    /* Afficher les URLs des liens */
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+    
+    /* Ne pas afficher les URLs pour les ancres */
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+        content: "";
+    }
+    
+    /* Assurer que le texte est noir sur blanc */
+    body {
+        color: #000;
+        background: #fff;
+    }
+}

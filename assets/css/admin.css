@@ -1,0 +1,193 @@
+/**
+ * Admin CSS - Styles pour l'interface d'administration
+ * 
+ * @package Mairie_France
+ * @since 1.0.0
+ */
+
+/* ===== METABOXES ===== */
+.mairie-metabox {
+    padding: 15px;
+}
+
+.mairie-metabox-description {
+    background: #f0f6fc;
+    border-left: 4px solid #000091;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.mairie-field-group {
+    margin-bottom: 20px;
+}
+
+.mairie-field {
+    margin-bottom: 15px;
+}
+
+.mairie-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #1d2327;
+}
+
+.mairie-field .required {
+    color: #d63638;
+}
+
+.mairie-field input[type="text"],
+.mairie-field input[type="tel"],
+.mairie-field input[type="email"],
+.mairie-field input[type="url"],
+.mairie-field textarea,
+.mairie-field select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.mairie-field input:focus,
+.mairie-field textarea:focus,
+.mairie-field select:focus {
+    border-color: #000091;
+    outline: none;
+    box-shadow: 0 0 0 1px #000091;
+}
+
+.mairie-field .description {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #646970;
+    font-style: italic;
+}
+
+.mairie-field-row {
+    display: flex;
+    gap: 15px;
+}
+
+.mairie-field-row .mairie-field {
+    flex: 1;
+}
+
+/* ===== WIDGETS ADMIN ===== */
+.mairie-widget-lien-item {
+    background: #f6f7f7;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #c3c4c7;
+}
+
+.mairie-widget-lien-item label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.mairie-widget-lien-item:first-of-type label:first-child {
+    margin-top: 0;
+}
+
+/* ===== CUSTOMIZER ===== */
+.customize-control-description {
+    font-style: italic;
+    color: #646970;
+}
+
+/* ===== NOTICES ===== */
+.notice.mairie-notice {
+    border-left-color: #000091;
+}
+
+.notice.mairie-notice.notice-info {
+    border-left-color: #0073aa;
+}
+
+.notice.mairie-notice.notice-warning {
+    border-left-color: #f0ad4e;
+}
+
+.notice.mairie-notice.notice-error {
+    border-left-color: #d63638;
+}
+
+/* ===== TABLE COLUMNS ===== */
+.column-phone,
+.column-email,
+.column-category {
+    width: 15%;
+}
+
+/* ===== HELP SECTIONS ===== */
+.mairie-help-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-left: 4px solid #000091;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.mairie-help-section h3 {
+    margin-top: 0;
+    color: #000091;
+}
+
+.mairie-help-section ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+/* ===== SETTINGS PAGE ===== */
+.mairie-settings-section {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+}
+
+.mairie-settings-section h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #000091;
+}
+
+/* ===== DASHBOARD WIDGET ===== */
+.mairie-dashboard-widget {
+    padding: 12px;
+}
+
+.mairie-dashboard-widget .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.mairie-dashboard-widget .stat-box {
+    background: #f0f6fc;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    border-left: 4px solid #000091;
+}
+
+.mairie-dashboard-widget .stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000091;
+    display: block;
+}
+
+.mairie-dashboard-widget .stat-label {
+    font-size: 13px;
+    color: #646970;
+    margin-top: 5px;
+    display: block;
+}
