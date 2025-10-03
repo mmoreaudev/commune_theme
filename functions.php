@@ -152,7 +152,7 @@ add_action('widgets_init', 'mairie_widgets_init');
  */
 function mairie_enqueue_scripts() {
     // Tailwind CSS via CDN
-    wp_enqueue_style('tailwind-cdn', 'https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css', array(), '3.4.1');
+    wp_enqueue_style('tailwind-cdn', 'https://cdn.tailwindcss.com', array(), '3.4.1');
     
     // Font Awesome pour les icônes
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1');
