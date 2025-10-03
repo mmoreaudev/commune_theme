@@ -11,9 +11,9 @@ $content = ob_start();
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach (($numbers ?? []) as $n): ?>
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h3 class="text-lg font-semibold mb-2"><?= e($n['label']) ?></h3>
-                <a href="tel:<?= e($n['number']) ?>" class="text-2xl font-bold text-primary hover:text-blue-700">
-                    <?= e($n['number']) ?>
+                <h3 class="text-lg font-semibold mb-2"><?= e($n['label'] ?? $n['name'] ?? 'Numéro') ?></h3>
+                <a href="tel:<?= e($n['number'] ?? $n['phone'] ?? '') ?>" class="text-2xl font-bold text-primary hover:text-blue-700">
+                    <?= e($n['number'] ?? $n['phone'] ?? 'N/A') ?>
                 </a>
                 <?php if (isset($n['description']) && $n['description']): ?>
                     <p class="text-gray-600 mt-2"><?= e($n['description']) ?></p>
