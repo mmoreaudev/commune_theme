@@ -1,3 +1,6 @@
 $PrivateKey = "iL78VBbUjDLGI1MCGWutj78QhOzaFzYYxtrFngVslU="
-$PublicKey = & "C:\Program Files\WireGuard\wg.exe" pubkey <<< $PrivateKey
+$TempFile = "$env:TEMP\privkey.txt"
+$PrivateKey | Out-File -Encoding ASCII $TempFile
+$PublicKey = & "C:\Program Files\WireGuard\wg.exe" pubkey < $TempFile
 Write-Output $PublicKey
+Remove-Item $TempFile
