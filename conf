@@ -1,10 +1,3 @@
-[Interface]
-PrivateKey = iL78VBbUjDLGI1MCGWutj78QhOzaFzYYxtrFngVslU=
-Address = 10.10.0.1/24
-ListenPort = 51820
-
-# Exemple de peer (client)
-[Peer]
-PublicKey = <CLE_PUBLIQUE_DU_CLIENT>
-AllowedIPs = 10.10.0.2/32
-PersistentKeepalive = 25
+$PrivateKey = "iL78VBbUjDLGI1MCGWutj78QhOzaFzYYxtrFngVslU="
+$PublicKey = & "C:\Program Files\WireGuard\wg.exe" pubkey <<< $PrivateKey
+Write-Output $PublicKey
