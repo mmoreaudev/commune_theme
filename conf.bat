@@ -5,11 +5,11 @@ REM -----------------------------
 REM Variables à personnaliser
 REM -----------------------------
 SET WG_PATH="C:\Program Files\WireGuard\wg.exe"
-SET SERVER_PRIV="iL78VBbUjDLGI1MCGWutj78QhOzaFzYYxtrFngVslU="
-SET SERVER_CONF="%ProgramData%\WireGuard\wg0.conf"
+SET SERVER_PRIV=iL78VBbUjDLGI1MCGWutj78QhOzaFzYYxtrFngVslU=
+SET SERVER_CONF=%ProgramData%\WireGuard\wg0.conf
 SET SERVER_IP=10.10.0.1/24
 SET SERVER_PORT=51820
-SET PEER_PUB="<CLE_PUBLIQUE_DU_CLIENT>"
+SET PEER_PUB=<CLE_PUBLIQUE_DU_CLIENT>
 SET PEER_IP=10.10.0.2/32
 
 REM -----------------------------
@@ -28,9 +28,10 @@ SET TEMPFILE=%TEMP%\privkey.txt
 echo %SERVER_PRIV% > %TEMPFILE%
 
 REM -----------------------------
-REM Générer clé publique du serveur
+REM Générer clé publique serveur
 REM -----------------------------
-FOR /F "delims=" %%G IN ('%WG_PATH% pubkey < %TEMPFILE%') DO SET SERVER_PUB=%%G
+%WG_PATH% pubkey < %TEMPFILE% > %TEMP%\pubkey.txt
+set /p SERVER_PUB=<%TEMP%\pubkey.txt
 echo Clé publique du serveur : !SERVER_PUB!
 
 REM -----------------------------
@@ -54,6 +55,7 @@ REM -----------------------------
 REM Supprimer fichier temporaire
 REM -----------------------------
 del %TEMPFILE%
+del %TEMP%\pubkey.txt
 
 echo ✅ Configuration WireGuard prête.
 pause
