@@ -1,6 +1,15 @@
+# Clé privée du serveur
 $PrivateKey = "iL78VBbUjDLGI1MCGWutj78QhOzaFzYYxtrFngVslU="
+
+# Créer un fichier temporaire avec la clé privée
 $TempFile = "$env:TEMP\privkey.txt"
 $PrivateKey | Out-File -Encoding ASCII $TempFile
+
+# Générer la clé publique
 $PublicKey = & "C:\Program Files\WireGuard\wg.exe" pubkey < $TempFile
+
+# Afficher la clé publique
 Write-Output $PublicKey
+
+# Supprimer le fichier temporaire
 Remove-Item $TempFile
